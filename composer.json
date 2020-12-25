@@ -1,0 +1,66 @@
+{
+    "name": "qirolab/laravel-theme",
+    "description": "This is Laravel Theme.",
+    "keywords": [
+        "qirolab",
+        "laravel-theme"
+    ],
+    "homepage": "https://github.com/qirolab/laravel-theme",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Harish Kumar",
+            "email": "harish.pra22@gmail.com",
+            "homepage": "https://qirolab.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.0|^8.0",
+        "illuminate/support": "~5.5|~5.6|~5.7|~5.8|^6.0|^7.0|^8.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0|~3.8.0|^4.0|^5.0|^6.0",
+        "phpunit/phpunit": "^7.5|^8.0|^9.0",
+        "vimeo/psalm": "^3.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "Qirolab\\Theme\\": "src",
+            "Qirolab\\Theme\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Qirolab\\Theme\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "psalm": "vendor/bin/psalm",
+        "test": "vendor/bin/phpunit --colors=always",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Qirolab\\Theme\\ThemeServiceProvider"
+            ],
+            "aliases": {
+                "Theme": "Qirolab\\Theme\\ThemeFacade"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "funding": [
+        {
+            "type": "other",
+            "url": "https://www.buymeacoffee.com/qirolab"
+        }
+    ]
+}
