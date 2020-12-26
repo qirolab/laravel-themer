@@ -2,8 +2,10 @@
 
 namespace Qirolab\Theme;
 
+use Facade\IgnitionContracts\SolutionProviderRepository;
 use Illuminate\Support\ServiceProvider;
-use Qirolab\Theme\Commands\ThemeCommand;
+use Qirolab\Theme\Commands\ThemeCreateCommand;
+use Qirolab\Theme\SolutionProviders\ThemeViewNotFoundSolutionProvider;
 
 class ThemeServiceProvider extends ServiceProvider
 {
@@ -11,42 +13,53 @@ class ThemeServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/laravel-theme.php' => config_path('laravel-theme.php'),
+                __DIR__ . '/../config/theme.php' => config_path('theme.php'),
             ], 'config');
 
-            $this->publishes([
-                __DIR__ . '/../resources/views' => base_path('resources/views/vendor/laravel-theme'),
-            ], 'views');
-
-            $migrationFileName = 'create_laravel_theme_table.php';
-            if (! $this->migrationFileExists($migrationFileName)) {
-                $this->publishes([
-                    __DIR__ . "/../database/migrations/{$migrationFileName}.stub" => database_path('migrations/' . date('Y_m_d_His', time()) . '_' . $migrationFileName),
-                ], 'migrations');
-            }
-
             $this->commands([
-                ThemeCommand::class,
+                ThemeCreateCommand::class,
             ]);
         }
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'laravel-theme');
+        $this->app['view']->setFinder($this->app['theme.finder']);
     }
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/laravel-theme.php', 'laravel-theme');
+        $this->mergeConfig();
+
+        $this->registerThemeFinder();
+
+        $this->registerSolutionProvider();
     }
 
-    public static function migrationFileExists(string $migrationFileName): bool
+    protected function mergeConfig()
     {
-        $len = strlen($migrationFileName);
-        foreach (glob(database_path("migrations/*.php")) as $filename) {
-            if ((substr($filename, -$len) === $migrationFileName)) {
-                return true;
-            }
-        }
+        $this->mergeConfigFrom(__DIR__ . '/../config/theme.php', 'theme');
+    }
 
-        return false;
+    protected function registerSolutionProvider()
+    {
+        $solutionProvider = $this->app[SolutionProviderRepository::class];
+
+        $solutionProvider->registerSolutionProvider(
+            ThemeViewNotFoundSolutionProvider::class
+        );
+    }
+
+    protected function registerThemeFinder()
+    {
+        $this->app->singleton('theme.finder', function ($app) {
+            $themeFinder = new ThemeViewFinder(
+                $app['files'],
+                $app['config']['view.paths']
+            );
+
+            if (config('theme.active')) {
+                $themeFinder->setActiveTheme(config('theme.active'), config('theme.parent'));
+            }
+
+            return $themeFinder;
+        });
     }
 }
