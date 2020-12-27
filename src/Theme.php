@@ -3,7 +3,6 @@
 namespace Qirolab\Theme;
 
 use Illuminate\Support\Facades\View;
-use Qirolab\Theme\ThemeViewFinder;
 
 class Theme
 {
