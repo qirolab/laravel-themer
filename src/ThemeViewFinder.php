@@ -17,13 +17,13 @@ class ThemeViewFinder extends FileViewFinder
         if ($theme) {
             $this->clearThemes();
 
-            $this->activeTheme = $theme;
-            array_unshift($this->paths, $this->getThemeViewPath($theme));
-
             if ($parentTheme) {
                 $this->parentTheme = $parentTheme;
                 array_unshift($this->paths, $this->getThemeViewPath($parentTheme));
             }
+
+            $this->activeTheme = $theme;
+            array_unshift($this->paths, $this->getThemeViewPath($theme));
         }
     }
 

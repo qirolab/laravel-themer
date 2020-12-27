@@ -3,9 +3,11 @@
 namespace Qirolab\Theme;
 
 use Facade\IgnitionContracts\SolutionProviderRepository;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 use Qirolab\Theme\Commands\ThemeCreateCommand;
 use Qirolab\Theme\SolutionProviders\ThemeViewNotFoundSolutionProvider;
+use Qirolab\Theme\ThemeViewFinder;
 
 class ThemeServiceProvider extends ServiceProvider
 {
@@ -21,16 +23,14 @@ class ThemeServiceProvider extends ServiceProvider
             ]);
         }
 
-        $this->app['view']->setFinder($this->app['theme.finder']);
+        $this->registerThemeFinder();
+
+        $this->registerSolutionProvider();
     }
 
     public function register()
     {
         $this->mergeConfig();
-
-        $this->registerThemeFinder();
-
-        $this->registerSolutionProvider();
     }
 
     protected function mergeConfig()
@@ -40,11 +40,14 @@ class ThemeServiceProvider extends ServiceProvider
 
     protected function registerSolutionProvider()
     {
-        $solutionProvider = $this->app[SolutionProviderRepository::class];
+        try {
+            $solutionProvider = $this->app[SolutionProviderRepository::class];
 
-        $solutionProvider->registerSolutionProvider(
-            ThemeViewNotFoundSolutionProvider::class
-        );
+            $solutionProvider->registerSolutionProvider(
+                ThemeViewNotFoundSolutionProvider::class
+            );
+        } catch (BindingResolutionException $error) {
+        }
     }
 
     protected function registerThemeFinder()
@@ -61,5 +64,7 @@ class ThemeServiceProvider extends ServiceProvider
 
             return $themeFinder;
         });
+
+        $this->app['view']->setFinder($this->app['theme.finder']);
     }
 }
