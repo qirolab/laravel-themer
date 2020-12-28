@@ -2,10 +2,10 @@
 
 namespace Qirolab\Theme\Tests;
 
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Qirolab\Theme\Theme;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Filesystem\Filesystem;
 
 class ViewNamespaceTest extends TestCase
 {

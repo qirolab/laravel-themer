@@ -2,9 +2,9 @@
 
 namespace Qirolab\Theme\Tests;
 
+use Illuminate\Filesystem\Filesystem;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Qirolab\Theme\ThemeServiceProvider;
-use Illuminate\Filesystem\Filesystem;
 
 class TestCase extends Orchestra
 {
