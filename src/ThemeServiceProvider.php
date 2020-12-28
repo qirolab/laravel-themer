@@ -7,7 +7,6 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 use Qirolab\Theme\Commands\ThemeCreateCommand;
 use Qirolab\Theme\SolutionProviders\ThemeViewNotFoundSolutionProvider;
-use Qirolab\Theme\ThemeViewFinder;
 
 class ThemeServiceProvider extends ServiceProvider
 {

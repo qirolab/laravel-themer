@@ -4,7 +4,6 @@ namespace Qirolab\Theme\Tests;
 
 use Illuminate\Support\Facades\View;
 use Qirolab\Theme\Theme;
-use function PHPUnit\Framework\assertEquals;
 
 class ClearThemeTest extends TestCase
 {

@@ -26,7 +26,7 @@ class ThemeViewNotFoundSolutionProvider implements HasSolutionsForThrowable
                     ->setSolutionDescription($message)
                     ->setDocumentationLinks([
                         'Documentation' => 'http://qirolab.com',
-                    ])
+                    ]),
             ];
         }
 
