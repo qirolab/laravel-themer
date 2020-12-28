@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\View;
 
 class Theme
 {
-    public static function set(string $theme, string $parentTheme = null)
+    public static function set(string $theme, string $parentTheme = null): void
     {
         $viewFinder = View::getFinder();
 
@@ -15,7 +15,7 @@ class Theme
         }
     }
 
-    public static function clear()
+    public static function clear(): void
     {
         $viewFinder = View::getFinder();
 
@@ -24,7 +24,7 @@ class Theme
         }
     }
 
-    public static function active()
+    public static function active(): ?string
     {
         $viewFinder = View::getFinder();
 
@@ -35,7 +35,7 @@ class Theme
         return null;
     }
 
-    public static function parent()
+    public static function parent(): ?string
     {
         $viewFinder = View::getFinder();
 
@@ -46,7 +46,7 @@ class Theme
         return null;
     }
 
-    public static function path(string $theme = null)
+    public static function path(string $theme = null): ?string
     {
         $theme = $theme ?? self::active();
         $viewFinder = View::getFinder();

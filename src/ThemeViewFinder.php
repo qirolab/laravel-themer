@@ -6,11 +6,17 @@ use Illuminate\View\FileViewFinder;
 
 class ThemeViewFinder extends FileViewFinder
 {
+    /**
+     * @var null|string
+     */
     protected $activeTheme;
 
+    /**
+     * @var null|string
+     */
     protected $parentTheme;
 
-    public function setActiveTheme(string $theme = null, string $parentTheme = null)
+    public function setActiveTheme(string $theme = null, string $parentTheme = null): void
     {
         $theme = $theme ?? config('theme.active');
         if ($theme) {
@@ -59,14 +65,16 @@ class ThemeViewFinder extends FileViewFinder
         return $this->parentTheme;
     }
 
-    public function getThemeViewPath(string $theme): string
+    public function getThemeViewPath(string $theme = null): string
     {
+        $theme = $theme ?? $this->getActiveTheme();
+
         return $this->resolvePath(
             $this->getBasePath() . DIRECTORY_SEPARATOR . $theme . DIRECTORY_SEPARATOR . 'views'
         );
     }
 
-    public function clearThemes()
+    public function clearThemes(): void
     {
         $paths = $this->paths;
 
@@ -87,14 +95,14 @@ class ThemeViewFinder extends FileViewFinder
         $this->setPaths($paths);
     }
 
-    public function registerTheme($theme)
+    public function registerTheme(string $theme): void
     {
         array_unshift($this->paths, $this->getThemeViewPath($theme));
 
         $this->registerNameSpacesForTheme($theme);
     }
 
-    public function registerNameSpacesForTheme(string $theme)
+    public function registerNameSpacesForTheme(string $theme): void
     {
         $vendorViewsPath = $this->getThemeViewPath($theme) . DIRECTORY_SEPARATOR . 'vendor';
 

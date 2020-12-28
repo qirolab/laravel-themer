@@ -10,12 +10,21 @@ use Throwable;
 
 class ThemeViewNotFoundSolutionProvider implements HasSolutionsForThrowable
 {
+    /**
+     * @return true
+     */
     public function canSolve(Throwable $throwable): bool
     {
         return true;
     }
 
-    /** \Facade\IgnitionContracts\Solution[] */
+    /**
+     * \Facade\IgnitionContracts\Solution[]
+     *
+     * @return array
+     *
+     * @psalm-return array{0?: mixed}
+     */
     public function getSolutions(Throwable $throwable): array
     {
         $message = $this->getMessage();

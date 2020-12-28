@@ -10,7 +10,7 @@ use Qirolab\Theme\SolutionProviders\ThemeViewNotFoundSolutionProvider;
 
 class ThemeServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -32,15 +32,15 @@ class ThemeServiceProvider extends ServiceProvider
         $this->mergeConfig();
     }
 
-    protected function mergeConfig()
+    protected function mergeConfig(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/theme.php', 'theme');
     }
 
-    protected function registerSolutionProvider()
+    protected function registerSolutionProvider(): void
     {
         try {
-            $solutionProvider = $this->app[SolutionProviderRepository::class];
+            $solutionProvider = $this->app->make(SolutionProviderRepository::class);
 
             $solutionProvider->registerSolutionProvider(
                 ThemeViewNotFoundSolutionProvider::class
@@ -49,7 +49,7 @@ class ThemeServiceProvider extends ServiceProvider
         }
     }
 
-    protected function registerThemeFinder()
+    protected function registerThemeFinder(): void
     {
         $this->app->singleton('theme.finder', function ($app) {
             $themeFinder = new ThemeViewFinder(
@@ -64,6 +64,6 @@ class ThemeServiceProvider extends ServiceProvider
             return $themeFinder;
         });
 
-        $this->app['view']->setFinder($this->app['theme.finder']);
+        $this->app->make('view')->setFinder($this->app->make('theme.finder'));
     }
 }
