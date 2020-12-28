@@ -13,17 +13,18 @@ class ThemeViewFinder extends FileViewFinder
     public function setActiveTheme(string $theme = null, string $parentTheme = null)
     {
         $theme = $theme ?? config('theme.active');
-
         if ($theme) {
             $this->clearThemes();
 
             if ($parentTheme) {
+                $this->registerTheme($parentTheme);
+
                 $this->parentTheme = $parentTheme;
-                array_unshift($this->paths, $this->getThemeViewPath($parentTheme));
             }
 
+            $this->registerTheme($theme);
+
             $this->activeTheme = $theme;
-            array_unshift($this->paths, $this->getThemeViewPath($theme));
         }
     }
 
@@ -84,5 +85,28 @@ class ThemeViewFinder extends FileViewFinder
         $this->activeTheme = null;
         $this->parentTheme = null;
         $this->setPaths($paths);
+    }
+
+    public function registerTheme($theme)
+    {
+        array_unshift($this->paths, $this->getThemeViewPath($theme));
+
+        $this->registerNameSpacesForTheme($theme);
+    }
+
+    public function registerNameSpacesForTheme(string $theme)
+    {
+        $vendorViewsPath = $this->getThemeViewPath($theme) . DIRECTORY_SEPARATOR . 'vendor';
+
+        if (is_dir($vendorViewsPath)) {
+            $directories = scandir($vendorViewsPath);
+
+            foreach ($directories as $namespace) {
+                if ($namespace != '.' && $namespace != '..') {
+                    $path = $vendorViewsPath . DIRECTORY_SEPARATOR . $namespace;
+                    $this->prependNamespace($namespace, $path);
+                }
+            }
+        }
     }
 }
