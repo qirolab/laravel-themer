@@ -21,13 +21,30 @@ class ThemeTest extends TestCase
         $theme = config('theme.active');
         $path = config('theme.base_path') . DIRECTORY_SEPARATOR . $theme . DIRECTORY_SEPARATOR . 'views';
         $path = realpath($path) ?: $path;
-        $this->assertEquals($path, Theme::path());
+        $this->assertEquals($path, Theme::viewPath());
 
         // admin theme
         $theme = 'admin';
         $path = config('theme.base_path') . DIRECTORY_SEPARATOR . $theme . DIRECTORY_SEPARATOR . 'views';
         $path = realpath($path) ?: $path;
-        $this->assertEquals($path, Theme::path($theme));
+        $this->assertEquals($path, Theme::viewPath($theme));
+    }
+
+    /** @test **/
+    public function it_returns_theme_path()
+    {
+        $theme = config('theme.active');
+        $path = config('theme.base_path') . DIRECTORY_SEPARATOR . $theme;
+        $this->assertEquals($path, Theme::path());
+
+        $path = $path . DIRECTORY_SEPARATOR . 'views';
+        $this->assertEquals($path, Theme::path('views'));
+
+        $path = config('theme.base_path') . DIRECTORY_SEPARATOR . 'admin';
+        $this->assertEquals($path, Theme::path('', 'admin'));
+
+        $path = $path . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'vendors';
+        $this->assertEquals($path, Theme::path('views/vendors', 'admin'));
     }
 
     /** @test **/
@@ -35,19 +52,19 @@ class ThemeTest extends TestCase
     {
         $this->assertCount(2, View::getFinder()->getPaths());
 
-        $this->assertEquals(Theme::path(), View::getFinder()->getPaths()[0]);
+        $this->assertEquals(Theme::viewPath(), View::getFinder()->getPaths()[0]);
     }
 
     /** @test **/
     public function it_can_set_new_theme()
     {
         $theme = config('theme.active');
-        $this->assertEquals(Theme::path($theme), View::getFinder()->getPaths()[0]);
+        $this->assertEquals(Theme::viewPath($theme), View::getFinder()->getPaths()[0]);
         $this->assertEquals($theme, View::getFinder()->getActiveTheme());
 
         $theme = 'admin';
         Theme::set($theme);
-        $this->assertEquals(Theme::path($theme), View::getFinder()->getPaths()[0]);
+        $this->assertEquals(Theme::viewPath($theme), View::getFinder()->getPaths()[0]);
         $this->assertEquals($theme, View::getFinder()->getActiveTheme());
     }
 
@@ -64,7 +81,7 @@ class ThemeTest extends TestCase
     public function it_removes_previous_theme_path_from_laravel_view_finder_paths()
     {
         $theme = config('theme.active');
-        $previousPath = Theme::path($theme);
+        $previousPath = Theme::viewPath($theme);
         $this->assertEquals($previousPath, View::getFinder()->getPaths()[0]);
         $this->assertCount(2, View::getFinder()->getPaths());
 
@@ -72,7 +89,7 @@ class ThemeTest extends TestCase
         Theme::set($theme);
 
         // new theme path in the view finder
-        $this->assertEquals(Theme::path($theme), View::getFinder()->getPaths()[0]);
+        $this->assertEquals(Theme::viewPath($theme), View::getFinder()->getPaths()[0]);
 
         // previous path is removed in the view finder
         $this->assertFalse(in_array($previousPath, View::getFinder()->getPaths()));
@@ -94,6 +111,6 @@ class ThemeTest extends TestCase
     {
         $this->app['view']->setFinder($this->app['view.finder']);
 
-        $this->assertNull(Theme::path('admin'));
+        $this->assertNull(Theme::viewPath('admin'));
     }
 }

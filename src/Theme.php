@@ -46,13 +46,25 @@ class Theme
         return null;
     }
 
-    public static function path(string $theme = null): ?string
+    public static function viewPath(string $theme = null): ?string
     {
         $theme = $theme ?? self::active();
         $viewFinder = View::getFinder();
 
         if ($theme && $viewFinder instanceof ThemeViewFinder) {
             return $viewFinder->getThemeViewPath($theme);
+        }
+
+        return null;
+    }
+
+    public static function path(string $path = null, string $theme = null): ?string
+    {
+        $theme = $theme ?? self::active();
+        $viewFinder = View::getFinder();
+
+        if ($theme && $viewFinder instanceof ThemeViewFinder) {
+            return $viewFinder->getThemePath($theme, $path);
         }
 
         return null;

@@ -45,6 +45,20 @@ class ThemeViewFinder extends FileViewFinder
         return config('theme.base_path');
     }
 
+    public function getThemePath($theme, $path = null)
+    {
+        return $this->resolvePath(
+            $this->getBasePath() . DIRECTORY_SEPARATOR . $theme . ($path ? DIRECTORY_SEPARATOR . $path : $path)
+        );
+    }
+
+    public function getThemeViewPath(string $theme = null): string
+    {
+        $theme = $theme ?? $this->getActiveTheme();
+
+        return $this->getThemePath($theme, 'views');
+    }
+
     /**
      * Get active theme name.
      *
@@ -63,15 +77,6 @@ class ThemeViewFinder extends FileViewFinder
     public function getParentTheme()
     {
         return $this->parentTheme;
-    }
-
-    public function getThemeViewPath(string $theme = null): string
-    {
-        $theme = $theme ?? $this->getActiveTheme();
-
-        return $this->resolvePath(
-            $this->getBasePath() . DIRECTORY_SEPARATOR . $theme . DIRECTORY_SEPARATOR . 'views'
-        );
     }
 
     public function clearThemes(): void

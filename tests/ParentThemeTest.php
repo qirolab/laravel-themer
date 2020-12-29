@@ -24,8 +24,8 @@ class ParentThemeTest extends TestCase
         $theme = config('theme.active');
         $parentTheme = config('theme.parent');
 
-        $this->assertEquals(Theme::path($theme), View::getFinder()->getPaths()[0]);
-        $this->assertEquals(Theme::path($parentTheme), View::getFinder()->getPaths()[1]);
+        $this->assertEquals(Theme::viewPath($theme), View::getFinder()->getPaths()[0]);
+        $this->assertEquals(Theme::viewPath($parentTheme), View::getFinder()->getPaths()[1]);
         $this->assertCount(3, View::getFinder()->getPaths());
     }
 
@@ -35,8 +35,8 @@ class ParentThemeTest extends TestCase
         $theme = config('theme.active');
         $parentTheme = config('theme.parent');
 
-        $this->assertEquals(Theme::path($theme), View::getFinder()->getPaths()[0]);
-        $this->assertEquals(Theme::path($parentTheme), View::getFinder()->getPaths()[1]);
+        $this->assertEquals(Theme::viewPath($theme), View::getFinder()->getPaths()[0]);
+        $this->assertEquals(Theme::viewPath($parentTheme), View::getFinder()->getPaths()[1]);
         $this->assertCount(3, View::getFinder()->getPaths());
 
         // switch theme
@@ -44,8 +44,8 @@ class ParentThemeTest extends TestCase
         $parentTheme = 'parent-admin';
         Theme::set($theme, $parentTheme);
 
-        $this->assertEquals(Theme::path($theme), View::getFinder()->getPaths()[0]);
-        $this->assertEquals(Theme::path($parentTheme), View::getFinder()->getPaths()[1]);
+        $this->assertEquals(Theme::viewPath($theme), View::getFinder()->getPaths()[0]);
+        $this->assertEquals(Theme::viewPath($parentTheme), View::getFinder()->getPaths()[1]);
         $this->assertCount(3, View::getFinder()->getPaths());
     }
 
@@ -76,8 +76,8 @@ class ParentThemeTest extends TestCase
     {
         $theme = config('theme.active');
         $parentTheme = config('theme.parent');
-        $previousThemePath = Theme::path($theme);
-        $previousParentTheme = Theme::path($parentTheme);
+        $previousThemePath = Theme::viewPath($theme);
+        $previousParentTheme = Theme::viewPath($parentTheme);
 
         $this->assertEquals($previousThemePath, View::getFinder()->getPaths()[0]);
         $this->assertEquals($previousParentTheme, View::getFinder()->getPaths()[1]);
@@ -89,8 +89,8 @@ class ParentThemeTest extends TestCase
         Theme::set($theme, $parentTheme);
 
         // new theme path in the view finder
-        $this->assertEquals(Theme::path($theme), View::getFinder()->getPaths()[0]);
-        $this->assertEquals(Theme::path($parentTheme), View::getFinder()->getPaths()[1]);
+        $this->assertEquals(Theme::viewPath($theme), View::getFinder()->getPaths()[0]);
+        $this->assertEquals(Theme::viewPath($parentTheme), View::getFinder()->getPaths()[1]);
 
         // previous path is removed in the view finder
         $this->assertFalse(in_array($previousThemePath, View::getFinder()->getPaths()));
@@ -105,8 +105,8 @@ class ParentThemeTest extends TestCase
     {
         $theme = config('theme.active');
         $parentTheme = config('theme.parent');
-        $previousThemePath = Theme::path($theme);
-        $previousParentTheme = Theme::path($parentTheme);
+        $previousThemePath = Theme::viewPath($theme);
+        $previousParentTheme = Theme::viewPath($parentTheme);
 
         $this->assertEquals($previousThemePath, View::getFinder()->getPaths()[0]);
         $this->assertEquals($previousParentTheme, View::getFinder()->getPaths()[1]);
@@ -117,7 +117,7 @@ class ParentThemeTest extends TestCase
         Theme::set($theme);
 
         // new theme path in the view finder
-        $this->assertEquals(Theme::path($theme), View::getFinder()->getPaths()[0]);
+        $this->assertEquals(Theme::viewPath($theme), View::getFinder()->getPaths()[0]);
 
         // previous path is removed in the view finder
         $this->assertFalse(in_array($previousThemePath, View::getFinder()->getPaths()));

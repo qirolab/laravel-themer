@@ -23,8 +23,8 @@ class ClearThemeTest extends TestCase
     {
         $theme = config('theme.active');
         $parentTheme = config('theme.parent');
-        $previousThemePath = Theme::path($theme);
-        $previousParentTheme = Theme::path($parentTheme);
+        $previousThemePath = Theme::viewPath($theme);
+        $previousParentTheme = Theme::viewPath($parentTheme);
 
         $this->assertEquals($previousThemePath, View::getFinder()->getPaths()[0]);
         $this->assertEquals($previousParentTheme, View::getFinder()->getPaths()[1]);

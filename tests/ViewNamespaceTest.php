@@ -50,7 +50,7 @@ class ViewNamespaceTest extends TestCase
     {
         if ($theme) {
             $text = "From theme {$theme}";
-            $viewPath = Theme::path($theme);
+            $viewPath = Theme::viewPath($theme);
         } else {
             $text = 'From default laravel views';
             $paths = View::getFinder()->getPaths();
@@ -69,7 +69,7 @@ class ViewNamespaceTest extends TestCase
     {
         if ($theme) {
             $text = "From theme {$theme} namespace";
-            $viewPath = Theme::path($theme);
+            $viewPath = Theme::viewPath($theme);
         } else {
             $text = 'From default laravel views namespace';
             $paths = View::getFinder()->getPaths();

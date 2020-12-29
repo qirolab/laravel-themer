@@ -56,7 +56,7 @@ class ControllerViewTest extends TestCase
     {
         if ($theme) {
             $text = "From theme {$theme}";
-            $viewPath = Theme::path($theme);
+            $viewPath = Theme::viewPath($theme);
         } else {
             $text = 'From default laravel views';
             $paths = View::getFinder()->getPaths();
