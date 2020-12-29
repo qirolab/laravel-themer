@@ -25,7 +25,7 @@ class TestCase extends Orchestra
 
     public function ensureDirectoryExists($path, $mode = 0755, $recursive = true)
     {
-        if (!(new Filesystem)->isDirectory($path)) {
+        if (! (new Filesystem)->isDirectory($path)) {
             (new Filesystem)->makeDirectory($path, $mode, $recursive);
         }
     }
