@@ -59,7 +59,7 @@ class ViewNamespaceTest extends TestCase
 
         $bladeFilePath = $viewPath . DIRECTORY_SEPARATOR . 'dashboard.blade.php';
 
-        (new Filesystem)->ensureDirectoryExists($viewPath);
+        $this->ensureDirectoryExists($viewPath);
         (new Filesystem)->put($bladeFilePath, $text . ' @include("testing::hello")');
 
         return $text;
@@ -79,7 +79,7 @@ class ViewNamespaceTest extends TestCase
         $namespacePath = $viewPath . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'testing';
         $namespaceBadeFile = $namespacePath . DIRECTORY_SEPARATOR . 'hello.blade.php';
 
-        (new Filesystem)->ensureDirectoryExists($namespacePath);
+        $this->ensureDirectoryExists($namespacePath);
         (new Filesystem)->put($namespaceBadeFile, $text);
 
         return $text;

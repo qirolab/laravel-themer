@@ -65,7 +65,7 @@ class ControllerViewTest extends TestCase
 
         $bladeFilePath = $viewPath . DIRECTORY_SEPARATOR . 'dashboard.blade.php';
 
-        (new Filesystem)->ensureDirectoryExists($viewPath);
+        $this->ensureDirectoryExists($viewPath);
         (new Filesystem)->put($bladeFilePath, $text);
 
         return $text;

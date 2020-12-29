@@ -13,6 +13,12 @@ jobs:
         laravel: [6.*, 7.*, 8.*]
         stability: [prefer-lowest, prefer-stable]
         exclude:
+          - laravel: 6.*
+            dependency-version: prefer-lowest
+          - laravel: 7.*
+            dependency-version: prefer-lowest
+          - laravel: 8.*
+            dependency-version: prefer-lowest
           - laravel: 8.*
             php: 7.2
         include:
