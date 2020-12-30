@@ -45,12 +45,12 @@ class ThemeViewNotFoundSolutionProvider implements HasSolutionsForThrowable
     /**
      * Solution Message
      *
-     * @return null|string
+     * @return string
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         $viewFinder = View::getFinder();
-        $message = null;
+        $message = '';
 
         if ($viewFinder instanceof ThemeViewFinder) {
             $activeTheme = $viewFinder->getActiveTheme();

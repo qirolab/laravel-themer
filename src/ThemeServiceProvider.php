@@ -5,7 +5,7 @@ namespace Qirolab\Theme;
 use Facade\IgnitionContracts\SolutionProviderRepository;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
-use Qirolab\Theme\Commands\ThemeCreateCommand;
+use Qirolab\Theme\Commands\MakeThemeCommand;
 use Qirolab\Theme\SolutionProviders\ThemeViewNotFoundSolutionProvider;
 
 class ThemeServiceProvider extends ServiceProvider
@@ -18,7 +18,7 @@ class ThemeServiceProvider extends ServiceProvider
             ], 'config');
 
             $this->commands([
-                ThemeCreateCommand::class,
+                MakeThemeCommand::class,
             ]);
         }
 
