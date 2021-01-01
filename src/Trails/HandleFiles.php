@@ -33,4 +33,40 @@ trait HandleFiles
     {
         file_put_contents($path, str_replace($search, $replace, file_get_contents($path)));
     }
+
+    /**
+     * Copy a directory from one location to another.
+     *
+     * @param  string  $directory
+     * @param  string  $destination
+     * @param  int|null  $options
+     * @return bool
+     */
+    public function copyDirectory($directory, $destination, $options = null)
+    {
+        return (new Filesystem)->copyDirectory($directory, $destination, $options);
+    }
+
+    /**
+     * Determine if a file or directory exists.
+     *
+     * @param  string  $path
+     * @return bool
+     */
+    public function exists($path)
+    {
+        return file_exists($path);
+    }
+
+    /**
+     * Append to a file.
+     *
+     * @param  string  $path
+     * @param  string  $data
+     * @return int
+     */
+    public function append($path, $data)
+    {
+        return file_put_contents($path, $data, FILE_APPEND);
+    }
 }

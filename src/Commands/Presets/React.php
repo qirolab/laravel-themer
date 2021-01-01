@@ -11,15 +11,15 @@ class React
     /**
      * Update the given package array.
      *
-     * @param  array  $packages
+     * @param  array $packages
      * @return array
      */
     protected static function updatePackageArray(array $packages): array
     {
         return [
-            '@babel/preset-react' => '^7.0.0',
-            'react' => '^16.2.0',
-            'react-dom' => '^16.2.0',
+            '@babel/preset-react' => '^7.12.10',
+            'react' => '^17.0.1',
+            'react-dom' => '^17.0.1',
         ] + $packages;
 
         // return [
@@ -56,7 +56,15 @@ class React
     {
         $this->updateComponent();
 
-        copy(__DIR__ . '/bootstrap-stubs/app.js', Theme::path('js/app.js', $this->theme));
+        copy(__DIR__ . '/react-stubs/app.js', Theme::path('js/app.js', $this->theme));
+
+        if (! $this->exists(Theme::path('js/bootstrap.js', $this->theme))) {
+            copy(__DIR__ . '/react-stubs/bootstrap.js', Theme::path('js/bootstrap.js', $this->theme));
+        }
+
+        if (! $this->exists(base_path('.babelrc'))) {
+            copy(__DIR__ . '/react-stubs/.babelrc', base_path('.babelrc'));
+        }
 
         return $this;
     }

@@ -43,7 +43,7 @@ class ThemeTest extends TestCase
         $path = config('theme.base_path') . DIRECTORY_SEPARATOR . 'admin';
         $this->assertEquals($path, Theme::path('', 'admin'));
 
-        $path = $path . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'vendors';
+        $path = $path . DIRECTORY_SEPARATOR . 'views/vendors';
         $this->assertEquals($path, Theme::path('views/vendors', 'admin'));
     }
 

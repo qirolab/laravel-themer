@@ -11,7 +11,7 @@ class Vue
     /**
      * Update the given package array.
      *
-     * @param  array  $packages
+     * @param  array $packages
      * @return array
      */
     protected static function updatePackageArray(array $packages): array
@@ -65,6 +65,10 @@ class Vue
         $this->updateComponent();
 
         copy(__DIR__ . '/vue-stubs/app.js', Theme::path('js/app.js', $this->theme));
+
+        if (! $this->exists(Theme::path('js/bootstrap.js', $this->theme))) {
+            copy(__DIR__ . '/vue-stubs/bootstrap.js', Theme::path('js/bootstrap.js', $this->theme));
+        }
 
         return $this;
     }

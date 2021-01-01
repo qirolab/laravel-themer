@@ -18,9 +18,8 @@ class TailwindCSS
     {
         return [
             '@tailwindcss/forms' => '^0.2.1',
-            'alpinejs' => '^2.7.3',
             'postcss-import' => '^12.0.1',
-            'tailwindcss' => 'npm:@tailwindcss/postcss7-compat@^2.0.1',
+            'tailwindcss' => 'npm:@tailwindcss/postcss7-compat@^2.0.2',
             'autoprefixer' => '^9.8.6',
         ] + $packages;
     }
@@ -55,11 +54,16 @@ class TailwindCSS
         $this->ensureDirectoryExists(Theme::path('js', $this->theme));
         $this->ensureDirectoryExists(Theme::path('css', $this->theme));
 
-        copy(__DIR__ . '/tailwind-stubs/tailwind.config.js', Theme::path('tailwind.config.js', $this->theme));
+        if (! $this->exists(base_path('tailwind.config.js'))) {
+            // copy(__DIR__ . '/tailwind-stubs/tailwind.config.js', Theme::path('tailwind.config.js', $this->theme));
+            copy(__DIR__ . '/tailwind-stubs/tailwind.config.js', base_path('tailwind.config.js'));
+        }
+
+        if (! $this->exists(Theme::path('js/app.js', $this->theme))) {
+            copy(__DIR__ . '/tailwind-stubs/js/app.js', Theme::path('js/app.js', $this->theme));
+        }
 
         copy(__DIR__ . '/tailwind-stubs/css/app.css', Theme::path('css/app.css', $this->theme));
-        copy(__DIR__ . '/tailwind-stubs/js/app.js', Theme::path('js/app.js', $this->theme));
-        copy(__DIR__ . '/tailwind-stubs/js/bootstrap.js', Theme::path('js/bootstrap.js', $this->theme));
 
         return $this;
     }

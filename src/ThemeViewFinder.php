@@ -33,6 +33,11 @@ class ThemeViewFinder extends FileViewFinder
         }
     }
 
+    public function setHints($hints): void
+    {
+        $this->hints = $hints;
+    }
+
     public function getThemePath(string $theme, string $path = null): string
     {
         // TODO: throw error if base path is not set

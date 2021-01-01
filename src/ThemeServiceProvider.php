@@ -57,6 +57,10 @@ class ThemeServiceProvider extends ServiceProvider
                 $app['config']['view.paths']
             );
 
+            $themeFinder->setHints(
+                $this->app->make('view')->getFinder()->getHints()
+            );
+
             if (config('theme.active')) {
                 $themeFinder->setActiveTheme(config('theme.active'), config('theme.parent'));
             }

@@ -4,6 +4,11 @@ namespace Qirolab\Theme\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
+use Qirolab\Theme\Commands\Presets\AuthScaffolding;
+use Qirolab\Theme\Commands\Presets\Bootstrap;
+use Qirolab\Theme\Commands\Presets\React;
+use Qirolab\Theme\Commands\Presets\TailwindCSS;
+use Qirolab\Theme\Commands\Presets\Vue;
 use Qirolab\Theme\Trails\HandleFiles;
 
 class MakeThemeCommand extends Command
@@ -22,59 +27,118 @@ class MakeThemeCommand extends Command
 
     public function handle(): void
     {
-        $theme = $this->argument('theme');
-        if (! $theme) {
-            // $theme = $this->ask('What is the name of your theme?');
+        $theme = $this->askTheme();
 
+        $cssFramework = $this->askCssFramework();
+
+        $jsFramework = $this->askJsFramework();
+
+        $authScaffolding = $this->askAuthScaffolding();
+
+        $this->publishPresets($cssFramework, $jsFramework, $theme);
+
+        $this->publishAuthScaffolding($authScaffolding, $theme, $cssFramework);
+
+        $this->info('Theme scaffolding installed successfully.');
+        $this->comment('Please run "npm install && npm run dev" to compile your fresh scaffolding.');
+    }
+
+    protected function askTheme()
+    {
+        $theme = $this->argument('theme');
+
+        if (! $theme) {
             $theme = $this->askValid(
-                'What is the name of your theme?',
+                'Name of your theme',
                 'theme',
                 ['required', 'min:3']
             );
         }
 
+        return $theme;
+    }
+
+    protected function askCssFramework()
+    {
         $cssFramework = $this->choice(
-            'Select CSS Framework?',
-            ['Bootstrap', 'Tailwind CSS', 'Skip'],
+            'Select CSS Framework',
+            ['Bootstrap', 'Tailwind', 'Skip'],
             $default = 'Bootstrap',
             $maxAttempts = null,
             $allowMultipleSelections = false
         );
 
+        return $cssFramework;
+    }
+
+    protected function askJsFramework()
+    {
         $jsFramework = $this->choice(
-            'Select Javascript Framework?',
+            'Select Javascript Framework',
             ['Vue', 'React', 'Skip'],
             $default = 'Vue',
             $maxAttempts = null,
             $allowMultipleSelections = false
         );
 
-        $this->publishCSSFramework($cssFramework, $theme);
-        $this->publishJSFramework($jsFramework, $theme);
-
-        $this->info('Theme scaffolding installed successfully.');
-        $this->comment('Please run "npm install && npm run dev" to compile your fresh scaffolding.');
+        return $jsFramework;
     }
 
-    protected function publishCSSFramework(string $cssFramework, string $theme): void
+    public function askAuthScaffolding()
     {
-        if ($cssFramework === 'Bootstrap') {
-            (new Presets\Bootstrap($theme))->install();
+        $authScaffolding = $this->choice(
+            'Publish Auth Scaffolding',
+            ['Views Only', 'Controllers & Views', 'Skip'],
+            $default = 'Views Only',
+            $maxAttempts = null,
+            $allowMultipleSelections = false
+        );
+
+        return $authScaffolding;
+    }
+
+    protected function publishAuthScaffolding($authScaffolding, string $theme, string $preset): void
+    {
+        $scaffolding = new AuthScaffolding($theme, $preset);
+
+        if ($authScaffolding == 'Controllers & Views') {
+            $scaffolding->install();
         }
 
-        if ($cssFramework === 'Tailwind CSS') {
-            (new Presets\TailwindCSS($theme))->install();
+        if ($authScaffolding == 'Views Only') {
+            $scaffolding->publishViews();
         }
+    }
+
+    protected function publishPresets(string $cssFramework, string $jsFramework, string $theme): void
+    {
+        if ($cssFramework === 'Bootstrap') {
+            (new Bootstrap($theme))->install();
+
+            $this->publishJSFramework($jsFramework, $theme);
+
+            return;
+        }
+
+        if ($cssFramework === 'Tailwind') {
+            $this->publishJSFramework($jsFramework, $theme);
+
+            (new TailwindCSS($theme))->install();
+
+            return;
+        }
+
+        $this->publishJSFramework($jsFramework, $theme);
     }
 
     protected function publishJSFramework(string $jsFramework, string $theme): void
     {
         if ($jsFramework === 'Vue') {
-            (new Presets\Vue($theme))->install();
+            (new Vue($theme))->install();
         }
 
         if ($jsFramework === 'React') {
-            (new Presets\React($theme))->install();
+            (new React($theme))->install();
         }
     }
 
