@@ -46,7 +46,7 @@ trait PresetTrait
     /**
      * Update the "package.json" file.
      *
-     * @param bool  $dev
+     * @param bool $dev
      *
      * @return null|$this
      */
@@ -66,12 +66,43 @@ trait PresetTrait
 
         ksort($packages[$configurationKey]);
 
+        $packages = $this->getPackageScripts($packages);
+
         file_put_contents(
             base_path('package.json'),
             json_encode($packages, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . PHP_EOL
         );
 
         return $this;
+    }
+
+    protected function getPackageScripts($packages)
+    {
+        $mixVersion = $packages['devDependencies']['laravel-mix'] ?? null;
+        $mixVersion = $this->getVersion($mixVersion);
+
+        if ($mixVersion) {
+            if (version_compare($mixVersion, '6.0.0', '<')) {
+                $packages['scripts'] = [
+                    'dev' => 'npm run development',
+                    'development' => 'cross-env theme=$npm_config_theme NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --config=node_modules/laravel-mix/setup/webpack.config.js',
+                    'watch' => 'npm run development -- --watch',
+                    'watch-poll' => 'npm run watch -- --watch-poll',
+                    'hot' => 'cross-env theme=$npm_config_theme NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js',
+                    'prod' => 'npm run production',
+                    'production' => 'cross-env theme=$npm_config_theme NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --config=node_modules/laravel-mix/setup/webpack.config.js',
+                ];
+            }
+        }
+
+        return $packages;
+    }
+
+    protected function getVersion($str)
+    {
+        preg_match("/\s*((?:[0-9]+\.?)+)/i", $str, $matches);
+
+        return $matches[1];
     }
 
     /**
