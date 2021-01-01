@@ -16,6 +16,15 @@ class ThemeViewFinder extends FileViewFinder
      */
     protected $parentTheme;
 
+    public function getViewFinder()
+    {
+        $app = app();
+
+        // return $app['theme.finder'];
+
+        return  $app['view']->getFinder();
+    }
+
     public function setActiveTheme(string $theme, string $parentTheme = null): void
     {
         if ($theme) {
@@ -76,7 +85,7 @@ class ThemeViewFinder extends FileViewFinder
 
     public function clearThemes(): void
     {
-        $paths = $this->paths;
+        $paths = $this->getViewFinder()->getPaths();
 
         if ($this->getActiveTheme()) {
             if (($key = array_search($this->getThemeViewPath($this->getActiveTheme()), $paths)) !== false) {
@@ -92,12 +101,14 @@ class ThemeViewFinder extends FileViewFinder
 
         $this->activeTheme = null;
         $this->parentTheme = null;
-        $this->setPaths($paths);
+        $this->getViewFinder()->setPaths($paths);
     }
 
     public function registerTheme(string $theme): void
     {
-        array_unshift($this->paths, $this->getThemeViewPath($theme));
+        // array_unshift($this->paths, $this->getThemeViewPath($theme));
+
+        $this->getViewFinder()->prependLocation($this->getThemeViewPath($theme));
 
         $this->registerNameSpacesForTheme($theme);
     }
@@ -112,7 +123,7 @@ class ThemeViewFinder extends FileViewFinder
             foreach ($directories as $namespace) {
                 if ($namespace != '.' && $namespace != '..') {
                     $path = $vendorViewsPath . DIRECTORY_SEPARATOR . $namespace;
-                    $this->prependNamespace($namespace, $path);
+                    $this->getViewFinder()->prependNamespace($namespace, $path);
                 }
             }
         }

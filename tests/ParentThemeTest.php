@@ -10,7 +10,7 @@ class ParentThemeTest extends TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Foundation\Application $app
      * @return void
      */
     protected function getEnvironmentSetUp($app)
@@ -66,7 +66,8 @@ class ParentThemeTest extends TestCase
     /** @test **/
     public function if_theme_is_disabled_then_active_theme_returns_null()
     {
-        $this->app['view']->setFinder($this->app['view.finder']);
+        // $this->app['view']->setFinder($this->app['view.finder']);
+        app()->forgetInstance('theme.finder');
 
         $this->assertNull(Theme::parent());
     }

@@ -2,57 +2,41 @@
 
 namespace Qirolab\Theme;
 
-use Illuminate\Support\Facades\View;
-
 class Theme
 {
+    public static function finder()
+    {
+        $app = app();
+
+        return $app['theme.finder'];
+    }
+
     public static function set(string $theme, string $parentTheme = null): void
     {
-        $viewFinder = View::getFinder();
-
-        if ($viewFinder instanceof ThemeViewFinder) {
-            $viewFinder->setActiveTheme($theme, $parentTheme);
-        }
+        self::finder()->setActiveTheme($theme, $parentTheme);
     }
 
     public static function clear(): void
     {
-        $viewFinder = View::getFinder();
-
-        if ($viewFinder instanceof ThemeViewFinder) {
-            $viewFinder->clearThemes();
-        }
+        self::finder()->clearThemes();
     }
 
     public static function active(): ?string
     {
-        $viewFinder = View::getFinder();
-
-        if ($viewFinder instanceof ThemeViewFinder) {
-            return $viewFinder->getActiveTheme();
-        }
-
-        return null;
+        return self::finder()->getActiveTheme();
     }
 
     public static function parent(): ?string
     {
-        $viewFinder = View::getFinder();
-
-        if ($viewFinder instanceof ThemeViewFinder) {
-            return $viewFinder->getParentTheme();
-        }
-
-        return null;
+        return self::finder()->getParentTheme();
     }
 
     public static function viewPath(string $theme = null): ?string
     {
         $theme = $theme ?? self::active();
-        $viewFinder = View::getFinder();
 
-        if ($theme && $viewFinder instanceof ThemeViewFinder) {
-            return $viewFinder->getThemeViewPath($theme);
+        if ($theme) {
+            return self::finder()->getThemeViewPath($theme);
         }
 
         return null;
@@ -61,10 +45,9 @@ class Theme
     public static function path(string $path = null, string $theme = null): ?string
     {
         $theme = $theme ?? self::active();
-        $viewFinder = View::getFinder();
 
-        if ($theme && $viewFinder instanceof ThemeViewFinder) {
-            return $viewFinder->getThemePath($theme, $path);
+        if ($theme) {
+            return self::finder()->getThemePath($theme, $path);
         }
 
         return null;

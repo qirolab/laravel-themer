@@ -61,13 +61,13 @@ class ThemeServiceProvider extends ServiceProvider
                 $this->app->make('view')->getFinder()->getHints()
             );
 
-            if (config('theme.active')) {
-                $themeFinder->setActiveTheme(config('theme.active'), config('theme.parent'));
-            }
-
             return $themeFinder;
         });
 
-        $this->app->make('view')->setFinder($this->app->make('theme.finder'));
+        if (config('theme.active')) {
+            $this->app->make('theme.finder')->setActiveTheme(config('theme.active'), config('theme.parent'));
+        }
+
+        // $this->app->make('view')->setFinder($this->app->make('theme.finder'));
     }
 }

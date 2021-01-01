@@ -8,10 +8,16 @@ use Qirolab\Theme\ThemeViewFinder;
 
 class ThemeTest extends TestCase
 {
+    // /** @test **/
+    // public function laravel_view_uses_package_theme_view_finder_class()
+    // {
+    //     $this->assertInstanceOf(ThemeViewFinder::class, View::getFinder());
+    // }
+
     /** @test **/
-    public function laravel_view_uses_package_theme_view_finder_class()
+    public function it_returns_theme_finder_class()
     {
-        $this->assertInstanceOf(ThemeViewFinder::class, View::getFinder());
+        $this->assertInstanceOf(ThemeViewFinder::class, Theme::finder());
     }
 
     /** @test **/
@@ -60,12 +66,12 @@ class ThemeTest extends TestCase
     {
         $theme = config('theme.active');
         $this->assertEquals(Theme::viewPath($theme), View::getFinder()->getPaths()[0]);
-        $this->assertEquals($theme, View::getFinder()->getActiveTheme());
+        $this->assertEquals($theme, Theme::finder()->getActiveTheme());
 
         $theme = 'admin';
         Theme::set($theme);
         $this->assertEquals(Theme::viewPath($theme), View::getFinder()->getPaths()[0]);
-        $this->assertEquals($theme, View::getFinder()->getActiveTheme());
+        $this->assertEquals($theme, Theme::finder()->getActiveTheme());
     }
 
     /** @test **/
@@ -101,16 +107,18 @@ class ThemeTest extends TestCase
     /** @test **/
     public function on_change_view_finder_active_theme_returns_null()
     {
-        $this->app['view']->setFinder($this->app['view.finder']);
+        // $this->app['view']->setFinder($this->app['view.finder']);
+        app()->forgetInstance('theme.finder');
 
         $this->assertNull(Theme::active());
     }
 
-    /** @test **/
-    public function on_change_view_finder_theme_path_returns_null()
-    {
-        $this->app['view']->setFinder($this->app['view.finder']);
+    // /** @test **/
+    // public function on_change_view_finder_theme_path_returns_null()
+    // {
+    //     // $this->app['view']->setFinder($this->app['view.finder']);
+    //     app()->forgetInstance('theme.finder');
 
-        $this->assertNull(Theme::viewPath('admin'));
-    }
+    //     $this->assertNull(Theme::viewPath('admin'));
+    // }
 }
