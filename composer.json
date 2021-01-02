@@ -7,12 +7,12 @@
         "theme",
         "laravel"
     ],
-    "homepage": "https://github.com/qirolab/laravel-themer",
+    "homepage": "https://qirolab.com",
     "license": "MIT",
     "authors": [
         {
             "name": "Harish Kumar",
-            "email": "harish.pra22@gmail.com",
+            "email": "harish@qirolab.com",
             "homepage": "https://qirolab.com",
             "role": "Developer"
         }

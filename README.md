@@ -19,7 +19,9 @@ To install, configure and learn how to use Laravel Themer package please go to t
 ## Support us
 We invest a lot of resources into video tutorials and creating open-source packages. If you like what I do or if you ever made use of something I built or from my videos, consider supporting us. This will allow us to focus even more time on the tutorials and open-source projects we're working on.
 
-<a href="https://www.buymeacoffee.com/qirolab" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<a href="https://www.buymeacoffee.com/qirolab" target="_blank"><img
+src="https://i.imgur.com/zHowozE.png" alt="Buy Me A Coffee" style="height: 60px
+!important; width: 217px !important;"></a>
 
 Thank you so much for helping us out! 🥰
 
