@@ -1,43 +1,27 @@
-# This is Laravel Theme.
+# Multi theme support for Laravel application
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/qirolab/laravel-theme.svg?style=flat-square)](https://packagist.org/packages/qirolab/laravel-theme)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/qirolab/laravel-theme/run-tests?label=tests)](https://github.com/qirolab/laravel-theme/actions?query=workflow%3ATests+branch%3Amaster)
-[![Total Downloads](https://img.shields.io/packagist/dt/qirolab/laravel-theme.svg?style=flat-square)](https://packagist.org/packages/qirolab/laravel-theme)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/qirolab/laravel-themer.svg?style=flat-square)](https://packagist.org/packages/qirolab/laravel-themer)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/qirolab/laravel-themer/run-tests?label=tests)](https://github.com/qirolab/laravel-themer/actions?query=workflow%3ATests+branch%3Amaster)
+[![Total Downloads](https://img.shields.io/packagist/dt/qirolab/laravel-themer.svg?style=flat-square)](https://packagist.org/packages/qirolab/laravel-themer)
 
 
-## Installation
+This Laravel package adds multi-theme support to your application. It also provides a simple authentication scaffolding for a starting point for building a Laravel application. And it also has preset for  `Bootstrap`, `Tailwind`, `Vue`, and `React`. So, I believe it is a good alternative to the `laravel/ui` & `laravel/breeze` package.
 
-You can install the package via composer:
+## Features
+- Views & Asset stored in separate the themes folder for easy theme management.
+- Theme hierarchy (WordPress style!): It allows creating a child theme to extend any theme.
+- Provides a simple authentication scaffolding.
+- Provides presets for `bootstrap`, `tailwind`, `vue`, and `react`
 
-```bash
-composer require qirolab/laravel-theme
-```
+## Documentation
+To install, configure and learn how to use Laravel Themer package please go to the [Documentation](https://qirolab.com).
 
-You can publish and run the migrations with:
+## Support us
+We invest a lot of resources into video tutorials and creating open-source packages. If you like what I do or if you ever made use of something I built or from my videos, consider supporting us. This will allow us to focus even more time on the tutorials and open-source projects we're working on.
 
-```bash
-php artisan vendor:publish --provider="Qirolab\Theme\ThemeServiceProvider" --tag="migrations"
-php artisan migrate
-```
+<a href="https://www.buymeacoffee.com/qirolab" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
-You can publish the config file with:
-```bash
-php artisan vendor:publish --provider="Qirolab\Theme\ThemeServiceProvider" --tag="config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-## Usage
-
-```php
-$laravel-theme = new Qirolab\Theme();
-echo $laravel-theme->echoPhrase('Hello, Qirolab!');
-```
+Thank you so much for helping us out! 🥰
 
 ## Testing
 
@@ -58,6 +42,8 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
 ## Credits
+Authentication scaffolding stubs and presets are taken from [Laravel
+UI](https://github.com/laravel/ui) and [Laravel Breeze](https://github.com/laravel/breeze).
 
 - [Harish Kumar](https://github.com/hkp22)
 - [All Contributors](../../contributors)

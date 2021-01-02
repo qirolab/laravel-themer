@@ -1,11 +1,13 @@
 {
-    "name": "qirolab/laravel-theme",
-    "description": "This is Laravel Theme.",
+    "name": "qirolab/laravel-themer",
+    "description": "A Laravel theme manager, that will help you organize and maintain your themes inside Laravel projects.",
     "keywords": [
         "qirolab",
-        "laravel-theme"
+        "laravel-theme",
+        "theme",
+        "laravel"
     ],
-    "homepage": "https://github.com/qirolab/laravel-theme",
+    "homepage": "https://github.com/qirolab/laravel-themer",
     "license": "MIT",
     "authors": [
         {
