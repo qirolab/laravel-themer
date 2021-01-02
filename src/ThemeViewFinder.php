@@ -18,11 +18,11 @@ class ThemeViewFinder extends FileViewFinder
 
     public function getViewFinder()
     {
-        $app = app();
+        // It should return `theme.finder` if Laravel's view finder is replaced
+        // with package's finder.
+        // return app('theme.finder');
 
-        // return $app['theme.finder'];
-
-        return  $app['view']->getFinder();
+        return app('view')->getFinder();
     }
 
     public function setActiveTheme(string $theme, string $parentTheme = null): void

@@ -6,9 +6,7 @@ class Theme
 {
     public static function finder()
     {
-        $app = app();
-
-        return $app['theme.finder'];
+        return app('theme.finder');
     }
 
     public static function set(string $theme, string $parentTheme = null): void

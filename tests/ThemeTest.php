@@ -8,11 +8,16 @@ use Qirolab\Theme\ThemeViewFinder;
 
 class ThemeTest extends TestCase
 {
-    // /** @test **/
-    // public function laravel_view_uses_package_theme_view_finder_class()
-    // {
-    //     $this->assertInstanceOf(ThemeViewFinder::class, View::getFinder());
-    // }
+    /**
+     * Define environment setup.
+     *
+     * @param  \Illuminate\Foundation\Application $app
+     * @return void
+     */
+    protected function getEnvironmentSetUp($app)
+    {
+        $app['config']->set('theme.active', 'default');
+    }
 
     /** @test **/
     public function it_returns_theme_finder_class()
@@ -112,13 +117,4 @@ class ThemeTest extends TestCase
 
         $this->assertNull(Theme::active());
     }
-
-    // /** @test **/
-    // public function on_change_view_finder_theme_path_returns_null()
-    // {
-    //     // $this->app['view']->setFinder($this->app['view.finder']);
-    //     app()->forgetInstance('theme.finder');
-
-    //     $this->assertNull(Theme::viewPath('admin'));
-    // }
 }

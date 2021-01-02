@@ -15,7 +15,8 @@ class ParentThemeTest extends TestCase
      */
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('theme.parent', 'parent');
+        $app['config']->set('theme.active', 'child-theme');
+        $app['config']->set('theme.parent', 'parent-theme');
     }
 
     /** @test **/

@@ -29,18 +29,26 @@ class MakeThemeCommand extends Command
     {
         $theme = $this->askTheme();
 
-        $cssFramework = $this->askCssFramework();
+        if (! $this->themeExists($theme)) {
+            $cssFramework = $this->askCssFramework();
 
-        $jsFramework = $this->askJsFramework();
+            $jsFramework = $this->askJsFramework();
 
-        $authScaffolding = $this->askAuthScaffolding();
+            $authScaffolding = $this->askAuthScaffolding();
 
-        $this->publishPresets($cssFramework, $jsFramework, $theme);
+            $this->line("Theme Name: {$theme}");
+            $this->line("CSS Framework: {$cssFramework}");
+            $this->line("JS Framework: {$jsFramework}");
+            $this->line("Auth Scaffolding: {$authScaffolding}");
+            $this->line('');
 
-        $this->publishAuthScaffolding($authScaffolding, $theme, $cssFramework);
+            $this->publishPresets($cssFramework, $jsFramework, $theme);
 
-        $this->info('Theme scaffolding installed successfully.');
-        $this->comment('Please run "npm install && npm run dev" to compile your fresh scaffolding.');
+            $this->publishAuthScaffolding($authScaffolding, $theme, $cssFramework);
+
+            $this->info('Theme scaffolding installed successfully.');
+            $this->comment('Please run "npm install && npm run dev" to compile your fresh scaffolding.');
+        }
     }
 
     protected function askTheme()
@@ -51,7 +59,7 @@ class MakeThemeCommand extends Command
             $theme = $this->askValid(
                 'Name of your theme',
                 'theme',
-                ['required', 'min:3']
+                ['required']
             );
         }
 
@@ -95,6 +103,19 @@ class MakeThemeCommand extends Command
         );
 
         return $authScaffolding;
+    }
+
+    protected function themeExists(string $theme): bool
+    {
+        $directory = config('theme.base_path') . DIRECTORY_SEPARATOR . $theme;
+
+        if (is_dir($directory)) {
+            $this->error("`{$theme}` theme already exists.");
+
+            return true;
+        }
+
+        return false;
     }
 
     protected function publishAuthScaffolding($authScaffolding, string $theme, string $preset): void
