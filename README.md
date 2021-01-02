@@ -1,7 +1,9 @@
 # Multi theme support for Laravel application
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/qirolab/laravel-themer.svg?style=flat-square)](https://packagist.org/packages/qirolab/laravel-themer)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/qirolab/laravel-themer/run-tests?label=tests)](https://github.com/qirolab/laravel-themer/actions?query=workflow%3ATests+branch%3Amaster)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/qirolab/laravel-themer/Tests?label=Tests)](https://github.com/qirolab/laravel-themer/actions?query=workflow%3ATests+branch%3Amaster)
+[![Styling](https://github.com/qirolab/laravel-themer/workflows/Check%20&%20fix%20styling/badge.svg)](https://github.com/qirolab/laravel-themer/actions?query=workflow%3A%22Check+%26+fix+styling%22)
+[![Psalm](https://github.com/qirolab/laravel-themer/workflows/Psalm/badge.svg)](https://github.com/qirolab/laravel-themer/actions?query=workflow%3APsalm)
 [![Total Downloads](https://img.shields.io/packagist/dt/qirolab/laravel-themer.svg?style=flat-square)](https://packagist.org/packages/qirolab/laravel-themer)
 
 
