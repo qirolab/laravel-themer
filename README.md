@@ -10,13 +10,13 @@
 This Laravel package adds multi-theme support to your application. It also provides a simple authentication scaffolding for a starting point for building a Laravel application. And it also has preset for  `Bootstrap`, `Tailwind`, `Vue`, and `React`. So, I believe it is a good alternative to the `laravel/ui` & `laravel/breeze` package.
 
 ## Features
-- Views & Asset stored in separate the themes folder for easy theme management.
-- Theme hierarchy (WordPress style!): It allows creating a child theme to extend any theme.
-- Provides a simple authentication scaffolding.
-- Provides presets for `bootstrap`, `tailwind`, `vue`, and `react`
+- Any number of themes
+- Fallback theme support; It allows creating a child theme to extend any theme
+- Provides a simple authentication scaffolding similar to laravel/ui & laravel/breeze package
+- Provides frontend presets for bootstrap, tailwind, vue, and react
 
 ## Documentation
-To install, configure and learn how to use Laravel Themer package please go to the [Documentation](https://qirolab.com).
+To install, configure and learn how to use Laravel Themer package please go to the [Documentation](https://qirolab.com/posts/laravel-themer-multi-theme-support-for-laravel-application-1609688215).
 
 ## Support us
 We invest a lot of resources into video tutorials and creating open-source packages. If you like what I do or if you ever made use of something I built or from my videos, consider supporting us. This will allow us to focus even more time on the tutorials and open-source projects we're working on.

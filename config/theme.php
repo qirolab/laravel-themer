@@ -6,7 +6,8 @@ return [
     | Default Active Theme
     |--------------------------------------------------------------------------
     |
-    | It will be a default active theme.
+    | It will assign the default active theme to be used if one is not set during
+    | runtime.
     */
     'active' => null,
 

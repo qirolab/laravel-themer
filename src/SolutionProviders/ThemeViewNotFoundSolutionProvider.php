@@ -34,7 +34,7 @@ class ThemeViewNotFoundSolutionProvider implements HasSolutionsForThrowable
                 BaseSolution::create('Theme')
                     ->setSolutionDescription($message)
                     ->setDocumentationLinks([
-                        'Documentation' => 'http://qirolab.com',
+                        'Documentation' => 'https://qirolab.com/posts/laravel-themer-multi-theme-support-for-laravel-application-1609688215',
                     ]),
             ];
         }
