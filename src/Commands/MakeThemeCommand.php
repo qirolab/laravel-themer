@@ -4,11 +4,13 @@ namespace Qirolab\Theme\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Qirolab\Theme\Commands\Presets\AuthScaffolding;
 use Qirolab\Theme\Commands\Presets\Bootstrap;
 use Qirolab\Theme\Commands\Presets\React;
 use Qirolab\Theme\Commands\Presets\TailwindCSS;
 use Qirolab\Theme\Commands\Presets\Vue;
+use Qirolab\Theme\Theme;
 use Qirolab\Theme\Trails\HandleFiles;
 
 class MakeThemeCommand extends Command
@@ -36,18 +38,23 @@ class MakeThemeCommand extends Command
 
             $authScaffolding = $this->askAuthScaffolding();
 
-            $this->line("Theme Name: {$theme}");
-            $this->line("CSS Framework: {$cssFramework}");
-            $this->line("JS Framework: {$jsFramework}");
-            $this->line("Auth Scaffolding: {$authScaffolding}");
+            $this->line("<options=bold>Theme Name:</options=bold> {$theme}");
+            $this->line("<options=bold>CSS Framework:</options=bold> {$cssFramework}");
+            $this->line("<options=bold>JS Framework:</options=bold> {$jsFramework}");
+            $this->line("<options=bold>Auth Scaffolding:</options=bold> {$authScaffolding}");
             $this->line('');
 
             $this->publishPresets($cssFramework, $jsFramework, $theme);
-
             $this->publishAuthScaffolding($authScaffolding, $theme, $cssFramework);
 
-            $this->info('Theme scaffolding installed successfully.');
-            $this->comment('Please run "npm install && npm run dev" to compile your fresh scaffolding.');
+            $this->info("Theme scaffolding installed successfully.\n");
+
+            $replaced = Str::replaceFirst(base_path(), '${__dirname}', 'require(`' . Theme::path('webpack.mix.js', $theme) . '`);');
+            $this->comment('Add following line in your root "<fg=blue>webpack.mix.js</fg=blue>" file:');
+            $this->line($replaced, 'fg=magenta');
+
+            $this->line('');
+            $this->comment('And please run "<fg=blue>npm install && npm run dev</fg=blue>" to compile your fresh scaffolding.');
         }
     }
 
