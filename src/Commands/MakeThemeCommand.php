@@ -16,6 +16,27 @@ use Qirolab\Theme\Trails\HandleFiles;
 class MakeThemeCommand extends Command
 {
     use HandleFiles;
+    use AuthScaffolding;
+
+    /**
+     * @var string
+     */
+    public $theme;
+
+    /**
+     * @var string
+     */
+    public $themePath;
+
+    /**
+     * @var string
+     */
+    public $cssFramework;
+
+    /**
+     * @var string
+     */
+    public $jsFramework;
 
     /**
      * @var string
@@ -29,27 +50,27 @@ class MakeThemeCommand extends Command
 
     public function handle(): void
     {
-        $theme = $this->askTheme();
+        $this->theme = $this->askTheme();
 
-        if (! $this->themeExists($theme)) {
-            $cssFramework = $this->askCssFramework();
+        if (! $this->themeExists($this->theme)) {
+            $this->cssFramework = $this->askCssFramework();
 
-            $jsFramework = $this->askJsFramework();
+            $this->jsFramework = $this->askJsFramework();
 
             $authScaffolding = $this->askAuthScaffolding();
 
-            $this->line("<options=bold>Theme Name:</options=bold> {$theme}");
-            $this->line("<options=bold>CSS Framework:</options=bold> {$cssFramework}");
-            $this->line("<options=bold>JS Framework:</options=bold> {$jsFramework}");
+            $this->line("<options=bold>Theme Name:</options=bold> {$this->theme}");
+            $this->line("<options=bold>CSS Framework:</options=bold> {$this->cssFramework}");
+            $this->line("<options=bold>JS Framework:</options=bold> {$this->jsFramework}");
             $this->line("<options=bold>Auth Scaffolding:</options=bold> {$authScaffolding}");
             $this->line('');
 
-            $this->publishPresets($cssFramework, $jsFramework, $theme);
-            $this->publishAuthScaffolding($authScaffolding, $theme, $cssFramework);
+            $this->publishPresets();
+            $this->publishAuthScaffolding($authScaffolding);
 
             $this->info("Theme scaffolding installed successfully.\n");
 
-            $replaced = Str::replaceFirst(base_path(), '${__dirname}', 'require(`' . Theme::path('webpack.mix.js', $theme) . '`);');
+            $replaced = Str::replaceFirst(base_path(), '${__dirname}', 'require(`' . Theme::path('webpack.mix.js', $this->theme) . '`);');
             $this->comment('Add following line in your root "<fg=blue>webpack.mix.js</fg=blue>" file:');
             $this->line($replaced, 'fg=magenta');
 
@@ -125,48 +146,46 @@ class MakeThemeCommand extends Command
         return false;
     }
 
-    protected function publishAuthScaffolding($authScaffolding, string $theme, string $preset): void
+    protected function publishAuthScaffolding(string $authScaffolding): void
     {
-        $scaffolding = new AuthScaffolding($theme, $preset);
-
         if ($authScaffolding == 'Controllers & Views') {
-            $scaffolding->install();
+            $this->installAuthScaffolding();
         }
 
         if ($authScaffolding == 'Views Only') {
-            $scaffolding->publishViews();
+            $this->publishViews();
         }
     }
 
-    protected function publishPresets(string $cssFramework, string $jsFramework, string $theme): void
+    protected function publishPresets(): void
     {
-        if ($cssFramework === 'Bootstrap') {
-            (new Bootstrap($theme))->install();
+        if ($this->cssFramework === 'Bootstrap') {
+            (new Bootstrap($this->theme))->install();
 
-            $this->publishJSFramework($jsFramework, $theme);
+            $this->publishJSFramework();
 
             return;
         }
 
-        if ($cssFramework === 'Tailwind') {
-            $this->publishJSFramework($jsFramework, $theme);
+        if ($this->cssFramework === 'Tailwind') {
+            $this->publishJSFramework();
 
-            (new TailwindCSS($theme))->install();
+            (new TailwindCSS($this->theme))->install();
 
             return;
         }
 
-        $this->publishJSFramework($jsFramework, $theme);
+        $this->publishJSFramework();
     }
 
-    protected function publishJSFramework(string $jsFramework, string $theme): void
+    protected function publishJSFramework(): void
     {
-        if ($jsFramework === 'Vue') {
-            (new Vue($theme))->install();
+        if ($this->jsFramework === 'Vue') {
+            (new Vue($this->theme))->install();
         }
 
-        if ($jsFramework === 'React') {
-            (new React($theme))->install();
+        if ($this->jsFramework === 'React') {
+            (new React($this->theme))->install();
         }
     }
 
