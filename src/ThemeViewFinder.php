@@ -3,6 +3,7 @@
 namespace Qirolab\Theme;
 
 use Illuminate\View\FileViewFinder;
+use Qirolab\Theme\Exceptions\ThemeBasePathNotDefined;
 
 class ThemeViewFinder extends FileViewFinder
 {
@@ -49,7 +50,9 @@ class ThemeViewFinder extends FileViewFinder
 
     public function getThemePath(string $theme, string $path = null): string
     {
-        // TODO: throw error if base path is not set
+        if (! config('theme.base_path')) {
+            throw new ThemeBasePathNotDefined();
+        }
 
         return $this->resolvePath(
             config('theme.base_path') . DIRECTORY_SEPARATOR . $theme . ($path ? DIRECTORY_SEPARATOR . $path : '')
