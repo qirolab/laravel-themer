@@ -2,6 +2,11 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 1.2.3 - 2021-01-23
+
+- Refactoring `AuthScaffolding` trait
+- `ThemeBasePathNotDefined` exception
+
 ## 1.2.2 - 2021-01-05
 
 - output message on theme command
