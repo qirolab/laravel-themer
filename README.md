@@ -11,12 +11,118 @@ This Laravel package adds multi-theme support to your application. It also provi
 
 ## Features
 - Any number of themes
-- Fallback theme support; It allows creating a child theme to extend any theme
-- Provides a simple authentication scaffolding similar to laravel/ui & laravel/breeze package
-- Provides frontend presets for bootstrap, tailwind, vue, and react
+- Fallback theme support (Wordpress style); It allows creating a child theme to extend any theme
+- Provides a simple authentication scaffolding similar to `laravel/ui` & `laravel/breeze` package
+- Provides frontend presets for `bootstrap`, `tailwind`, `vue`, and `react`
 
-## Documentation
-To install, configure and learn how to use Laravel Themer package please go to the [Documentation](https://qirolab.com/posts/laravel-themer-multi-theme-support-for-laravel-application-1609688215).
+## Installation and setup
+
+You can install this package via composer using:
+```bash
+composer require qirolab/laravel-themer
+```
+
+Publish a configuration file:
+```bash
+php artisan vendor:publish --provider="Qirolab\Theme\ThemeServiceProvider" --tag="config"
+```
+
+## Creating a theme
+
+Run the following command in the terminal:
+```bash
+php artisan make:theme
+```
+<img
+src="https://i.imgur.com/qLy7Iex.png" alt="Create theme" />
+
+This command will ask you to enter theme name, CSS framework, js framework, and optional auth scaffolding.
+
+## Useful Theme methods:
+
+```php
+// Set active theme
+Theme::set('theme-name');
+
+// Get current active theme
+Theme::active();
+
+// Get current parent theme
+Theme::parent();
+
+// Clear theme. So, no theme will be active
+Theme::clear();
+
+// Get theme path
+Theme::path($path = 'views');
+// output: app-root-path/themes/active-theme/views
+
+Theme::path($path = 'views', $themeName = 'admin');
+// output: app-root-path/themes/admin/views
+```
+
+## Middleware to set a theme
+Register `ThemeMiddleware` in `app\Http\Kernel.php`:
+
+```php
+protected $routeMiddleware = [
+    // ...
+    'theme' => \Qirolab\Theme\Middleware\ThemeMiddleware::class,
+];
+```
+Examples for middleware usage:
+```php
+// Example 1: set theme for a route
+Route::get('/dashboard', 'DashboardController@index')
+    ->middleware('theme:dashboard-theme');
+
+
+// Example 2: set theme for a route-group
+Route::group(['middleware'=>'theme:admin-theme'], function() {
+    // "admin-theme" will be applied to all routes defined here
+});
+
+
+// Example 3: set child and parent theme
+Route::get('/dashboard', 'DashboardController@index')
+    ->middleware('theme:child-theme,parent-theme');
+```
+
+## Asset compilation
+ To compile the theme assets, you need to add the theme's `webpack.mix.js` in
+ the root `webpack.mix.js`.
+
+```js
+// add this in the root `webpack.mix.js`
+require(`${__dirname}/themes/theme-name/webpack.mix.js`);
+```
+Now you can run the `npm install` and `npm run dev` command to compile theme assets.
+
+You can also modify the root `webpack.mix.js` with the following code:
+```js
+let theme = process.env.npm_config_theme;
+
+if(theme) {
+   require(`${__dirname}/themes/${theme}/webpack.mix.js`);
+} else {
+    // default theme to compile if theme is not specified
+  require(`${__dirname}/themes/theme-name/webpack.mix.js`);
+}
+```
+
+Now, to compile a particular theme run the following command:
+
+```bash
+npm run dev --theme=theme-name
+
+# or
+
+npm run watch --theme=theme-name
+
+# or
+
+npm run production --theme=theme-name
+```
 
 ## Support us
 We invest a lot of resources into video tutorials and creating open-source packages. If you like what I do or if you ever made use of something I built or from my videos, consider supporting us. This will allow us to focus even more time on the tutorials and open-source projects we're working on.
