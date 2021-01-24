@@ -4,8 +4,8 @@ namespace Qirolab\Theme\Tests;
 
 use Illuminate\Filesystem\Filesystem;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Qirolab\Theme\Presets\Traits\HandleFiles;
 use Qirolab\Theme\ThemeServiceProvider;
-use Qirolab\Theme\Trails\HandleFiles;
 
 class TestCase extends Orchestra
 {

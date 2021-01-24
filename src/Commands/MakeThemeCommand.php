@@ -5,18 +5,23 @@ namespace Qirolab\Theme\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Qirolab\Theme\Commands\Presets\AuthScaffolding;
-use Qirolab\Theme\Commands\Presets\Bootstrap;
-use Qirolab\Theme\Commands\Presets\React;
-use Qirolab\Theme\Commands\Presets\TailwindCSS;
-use Qirolab\Theme\Commands\Presets\Vue;
+use Qirolab\Theme\Presets\PresetExport;
+use Qirolab\Theme\Presets\Traits\AuthScaffolding;
 use Qirolab\Theme\Theme;
-use Qirolab\Theme\Trails\HandleFiles;
 
 class MakeThemeCommand extends Command
 {
-    use HandleFiles;
     use AuthScaffolding;
+
+    /**
+     * @var string
+     */
+    public $signature = 'make:theme {theme?}';
+
+    /**
+     * @var string
+     */
+    public $description = 'Create a new theme';
 
     /**
      * @var string
@@ -38,16 +43,6 @@ class MakeThemeCommand extends Command
      */
     public $jsFramework;
 
-    /**
-     * @var string
-     */
-    public $signature = 'make:theme {theme?}';
-
-    /**
-     * @var string
-     */
-    public $description = 'Create a new theme';
-
     public function handle(): void
     {
         $this->theme = $this->askTheme();
@@ -59,14 +54,20 @@ class MakeThemeCommand extends Command
 
             $authScaffolding = $this->askAuthScaffolding();
 
+            (new PresetExport(
+                $this->theme,
+                $this->cssFramework,
+                $this->jsFramework
+            ))
+            ->export();
+
+            $this->exportAuthScaffolding($authScaffolding);
+
             $this->line("<options=bold>Theme Name:</options=bold> {$this->theme}");
             $this->line("<options=bold>CSS Framework:</options=bold> {$this->cssFramework}");
             $this->line("<options=bold>JS Framework:</options=bold> {$this->jsFramework}");
             $this->line("<options=bold>Auth Scaffolding:</options=bold> {$authScaffolding}");
             $this->line('');
-
-            $this->publishPresets();
-            $this->publishAuthScaffolding($authScaffolding);
 
             $this->info("Theme scaffolding installed successfully.\n");
 
@@ -144,49 +145,6 @@ class MakeThemeCommand extends Command
         }
 
         return false;
-    }
-
-    protected function publishAuthScaffolding(string $authScaffolding): void
-    {
-        if ($authScaffolding == 'Controllers & Views') {
-            $this->installAuthScaffolding();
-        }
-
-        if ($authScaffolding == 'Views Only') {
-            $this->publishViews();
-        }
-    }
-
-    protected function publishPresets(): void
-    {
-        if ($this->cssFramework === 'Bootstrap') {
-            (new Bootstrap($this->theme))->install();
-
-            $this->publishJSFramework();
-
-            return;
-        }
-
-        if ($this->cssFramework === 'Tailwind') {
-            $this->publishJSFramework();
-
-            (new TailwindCSS($this->theme))->install();
-
-            return;
-        }
-
-        $this->publishJSFramework();
-    }
-
-    protected function publishJSFramework(): void
-    {
-        if ($this->jsFramework === 'Vue') {
-            (new Vue($this->theme))->install();
-        }
-
-        if ($this->jsFramework === 'React') {
-            (new React($this->theme))->install();
-        }
     }
 
     protected function askValid(string $question, string $field, array $rules)

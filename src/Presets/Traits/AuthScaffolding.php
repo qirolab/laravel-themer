@@ -1,45 +1,34 @@
 <?php
 
-namespace Qirolab\Theme\Commands\Presets;
+namespace Qirolab\Theme\Presets\Traits;
 
 use Qirolab\Theme\Theme;
 
 trait AuthScaffolding
 {
-    public function installAuthScaffolding(): void
+    use HandleFiles;
+
+    public function themePath($path = ''): string
     {
-        $this->publishControllers()
-            ->publishRequests()
-            ->publishViews()
-            ->publishTests()
-            ->publishRoutes();
+        return Theme::path($path, $this->theme);
     }
 
-    public function publishViews()
+    public function exportAuthScaffolding(string $authScaffolding = 'Views Only'): void
     {
-        $this->ensureDirectoryExists(Theme::path('views/auth', $this->theme));
-        $this->ensureDirectoryExists(Theme::path('views/layouts', $this->theme));
+        if ($authScaffolding == 'Controllers & Views') {
+            $this->exportControllers()
+                ->exportRequests()
+                ->exportViews()
+                ->exportRoutes()
+                ->exportTests();
+        }
 
-        $this->copyDirectory(
-            __DIR__ . "/../../../stubs/App/resources/{$this->cssFramework}/views/auth",
-            Theme::path('views/auth', $this->theme)
-        );
-        $this->copyDirectory(
-            __DIR__ . "/../../../stubs/App/resources/{$this->cssFramework}/views/layouts",
-            Theme::path('views/layouts', $this->theme)
-        );
-
-        copy(
-            __DIR__ . "/../../../stubs/App/resources/{$this->cssFramework}/views/home.blade.php",
-            Theme::path('views/home.blade.php', $this->theme)
-        );
-
-        $this->replaceInFile('%theme%', $this->theme, Theme::path('views/layouts/app.blade.php', $this->theme));
-
-        return $this;
+        if ($authScaffolding == 'Views Only') {
+            $this->exportViews();
+        }
     }
 
-    protected function publishControllers()
+    public function exportControllers() :self
     {
         $this->ensureDirectoryExists(app_path('Http/Controllers/Auth'));
 
@@ -78,7 +67,7 @@ trait AuthScaffolding
         return $this;
     }
 
-    protected function publishRequests()
+    protected function exportRequests(): self
     {
         $this->ensureDirectoryExists(app_path('Http/Requests/Auth'));
 
@@ -104,7 +93,31 @@ trait AuthScaffolding
         return $this;
     }
 
-    protected function publishRoutes()
+    public function exportViews(): self
+    {
+        $this->ensureDirectoryExists(Theme::path('views/auth', $this->theme));
+        $this->ensureDirectoryExists(Theme::path('views/layouts', $this->theme));
+
+        $this->copyDirectory(
+            __DIR__ . "/../../../stubs/App/resources/{$this->cssFramework}/views/auth",
+            Theme::path('views/auth', $this->theme)
+        );
+        $this->copyDirectory(
+            __DIR__ . "/../../../stubs/App/resources/{$this->cssFramework}/views/layouts",
+            Theme::path('views/layouts', $this->theme)
+        );
+
+        copy(
+            __DIR__ . "/../../../stubs/App/resources/{$this->cssFramework}/views/home.blade.php",
+            Theme::path('views/home.blade.php', $this->theme)
+        );
+
+        $this->replaceInFile('%theme%', $this->theme, Theme::path('views/layouts/app.blade.php', $this->theme));
+
+        return $this;
+    }
+
+    public function exportRoutes(): self
     {
         $routeFile = 'routes/auth.php';
 
@@ -141,8 +154,10 @@ Route::get('/home', function () {
         return $this;
     }
 
-    protected function publishTests()
+    public function exportTests(): self
     {
+        $this->ensureDirectoryExists(base_path('tests/Feature'));
+
         $testFiles = [
             'tests/Feature/AuthenticationTest.php',
             'tests/Feature/EmailVerificationTest.php',
