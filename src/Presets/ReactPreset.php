@@ -11,8 +11,8 @@ class ReactPreset
     public function export(): void
     {
         $this->updatePackages()
-            ->exportJs()
-            ->exportReactComponent();
+            ->exportReactComponent()
+            ->exportJs();
     }
 
     /**
@@ -49,9 +49,9 @@ class ReactPreset
             copy(__DIR__ . '/../../stubs/Presets/react-stubs/bootstrap.js', $this->themePath('js/bootstrap.js'));
         }
 
-        if (! $this->exists(base_path('.babelrc'))) {
-            copy(__DIR__ . '/../../stubs/Presets/react-stubs/.babelrc', base_path('.babelrc'));
-        }
+        // if (!$this->exists(base_path('.babelrc'))) {
+        //     copy(__DIR__ . '/../../stubs/Presets/react-stubs/.babelrc', base_path('.babelrc'));
+        // }
 
         return $this;
     }
@@ -77,7 +77,10 @@ class ReactPreset
     {
         if ($mixVersion = $this->getMixVersion()) {
             if (version_compare($mixVersion, '6.0.0', '<')) {
-                return '.js(`${__dirname}/js/app.js`, "js")';
+                return '.js(`${__dirname}/js/app.js`, "js")
+    .babelConfig({
+        presets: ["@babel/preset-react"]
+    })';
             }
 
             $jsMix = '.js(`${__dirname}/js/app.js`, "js")';
