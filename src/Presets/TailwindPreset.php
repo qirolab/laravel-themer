@@ -40,10 +40,7 @@ class TailwindPreset
         $this->ensureDirectoryExists($this->themePath('js'));
         $this->ensureDirectoryExists($this->themePath('css'));
 
-        if (! $this->exists(base_path('tailwind.config.js'))) {
-            // copy(__DIR__ . '/../../stubs/Presets/tailwind-stubs/tailwind.config.js', $this->themePath('tailwind.config.js'));
-            copy(__DIR__ . '/../../stubs/Presets/tailwind-stubs/tailwind.config.js', base_path('tailwind.config.js'));
-        }
+        copy(__DIR__ . '/../../stubs/Presets/tailwind-stubs/tailwind.config.js', $this->themePath('tailwind.config.js'));
 
         if (! $this->exists($this->themePath('js/app.js'))) {
             copy(__DIR__ . '/../../stubs/Presets/tailwind-stubs/js/app.js', $this->themePath('js/app.js'));
@@ -67,7 +64,9 @@ class TailwindPreset
     {
         return '.postCss(`${__dirname}/css/app.css`, "css", [
         require("postcss-import"),
-        require("tailwindcss"),
+        require("tailwindcss")({
+            config: `${__dirname}/tailwind.config.js`,
+        }),
         require("autoprefixer"),
     ])';
     }
