@@ -11,8 +11,8 @@ class VuePreset
     public function export(): void
     {
         $this->updatePackages()
-            ->exportJs()
-            ->exportVueComponent();
+            ->exportVueComponent()
+            ->exportJs();
     }
 
     /**
