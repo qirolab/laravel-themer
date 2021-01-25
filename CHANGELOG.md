@@ -2,6 +2,11 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 1.3.0 - 2021-01-26
+- Refactor code for preset export
+- Add `babelConfig` in `webpack.mix.js` for `preset-react` for Mix version 5.x
+- Load `tailwind.config.js` from theme directory
+
 ## 1.2.3 - 2021-01-23
 
 - Refactoring `AuthScaffolding` trait
