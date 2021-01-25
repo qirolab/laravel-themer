@@ -12,7 +12,8 @@ This Laravel package adds multi-theme support to your application. It also provi
 ## Features
 - Any number of themes
 - Fallback theme support (Wordpress style); It allows creating a child theme to extend any theme
-- Provides a simple authentication scaffolding similar to `laravel/ui` & `laravel/breeze` package
+- Provides a authentication scaffolding similar to `laravel/ui` & `laravel/breeze`
+- Exports all auth controllers, tests, and other files similar to `laravel/breeze`
 - Provides frontend presets for `bootstrap`, `tailwind`, `vue`, and `react`
 
 ## Installation and setup
@@ -33,8 +34,7 @@ Run the following command in the terminal:
 ```bash
 php artisan make:theme
 ```
-<img
-src="https://i.imgur.com/qLy7Iex.png" alt="Create theme" />
+<img src="https://i.imgur.com/qLy7Iex.png" alt="Create theme" />
 
 This command will ask you to enter theme name, CSS framework, js framework, and optional auth scaffolding.
 
@@ -98,7 +98,7 @@ require(`${__dirname}/themes/theme-name/webpack.mix.js`);
 ```
 Now you can run the `npm install` and `npm run dev` command to compile theme assets.
 
-You can also modify the root `webpack.mix.js` with the following code:
+If you add multiple `webpack.mix.js` of different themes in the root `webpack.mix.js`, then `webpack` may not compile these correctly. So, you should modify the root `webpack.mix.js` with the following code:
 ```js
 let theme = process.env.npm_config_theme;
 
