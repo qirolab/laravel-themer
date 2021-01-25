@@ -8,7 +8,7 @@ trait AuthScaffolding
 {
     use HandleFiles;
 
-    public function themePath($path = ''): string
+    public function themePath($path = '')
     {
         return Theme::path($path, $this->theme);
     }
@@ -98,21 +98,23 @@ trait AuthScaffolding
         $this->ensureDirectoryExists(Theme::path('views/auth', $this->theme));
         $this->ensureDirectoryExists(Theme::path('views/layouts', $this->theme));
 
-        $this->copyDirectory(
-            __DIR__ . "/../../../stubs/App/resources/{$this->cssFramework}/views/auth",
-            Theme::path('views/auth', $this->theme)
-        );
-        $this->copyDirectory(
-            __DIR__ . "/../../../stubs/App/resources/{$this->cssFramework}/views/layouts",
-            Theme::path('views/layouts', $this->theme)
-        );
+        if (is_dir(__DIR__ . "/../../../stubs/App/resources/{$this->cssFramework}/views")) {
+            $this->copyDirectory(
+                __DIR__ . "/../../../stubs/App/resources/{$this->cssFramework}/views/auth",
+                Theme::path('views/auth', $this->theme)
+            );
+            $this->copyDirectory(
+                __DIR__ . "/../../../stubs/App/resources/{$this->cssFramework}/views/layouts",
+                Theme::path('views/layouts', $this->theme)
+            );
 
-        copy(
-            __DIR__ . "/../../../stubs/App/resources/{$this->cssFramework}/views/home.blade.php",
-            Theme::path('views/home.blade.php', $this->theme)
-        );
+            copy(
+                __DIR__ . "/../../../stubs/App/resources/{$this->cssFramework}/views/home.blade.php",
+                Theme::path('views/home.blade.php', $this->theme)
+            );
 
-        $this->replaceInFile('%theme%', $this->theme, Theme::path('views/layouts/app.blade.php', $this->theme));
+            $this->replaceInFile('%theme%', $this->theme, Theme::path('views/layouts/app.blade.php', $this->theme));
+        }
 
         return $this;
     }

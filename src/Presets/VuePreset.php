@@ -11,8 +11,8 @@ class VuePreset
     public function export(): void
     {
         $this->updatePackages()
-            ->exportJs()
-            ->exportVueComponent();
+            ->exportVueComponent()
+            ->exportJs();
     }
 
     /**
@@ -52,6 +52,16 @@ class VuePreset
     protected function exportJs()
     {
         copy(__DIR__ . '/../../stubs/Presets/vue-stubs/app.js', $this->themePath('js/app.js'));
+
+        if ($mixVersion = $this->getMixVersion()) {
+            if (version_compare($mixVersion, '6.0.0', '<')) {
+                $this->replaceInFile(
+                    "require('vue').default",
+                    "require('vue')",
+                    $this->themePath('js/app.js')
+                );
+            }
+        }
 
         if (! $this->exists($this->themePath('js/bootstrap.js'))) {
             copy(__DIR__ . '/../../stubs/Presets/vue-stubs/bootstrap.js', $this->themePath('js/bootstrap.js'));
