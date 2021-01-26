@@ -112,8 +112,8 @@ class MakeThemeCommand extends Command
     {
         $jsFramework = $this->choice(
             'Select Javascript Framework',
-            ['Vue', 'React', 'Skip'],
-            $default = 'Vue',
+            ['Vue 2', 'Vue 3', 'React', 'Skip'],
+            $default = 'Vue 2',
             $maxAttempts = null,
             $allowMultipleSelections = false
         );

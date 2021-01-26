@@ -24,11 +24,11 @@ class BootstrapPreset
     protected static function updatePackageArray(array $packages): array
     {
         return [
-            'bootstrap' => '^4.0.0',
-            'jquery' => '^3.2',
-            'popper.js' => '^1.12',
-            'sass' => '^1.15.2',
-            'sass-loader' => '^8.0.0',
+            'bootstrap' => '^4.6.0',
+            'jquery' => '^3.5',
+            'popper.js' => '^1.16',
+            'sass' => '^1.32.1',
+            'sass-loader' => '^10.1.1',
         ] + $packages;
     }
 

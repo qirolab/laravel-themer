@@ -53,6 +53,8 @@ class PresetExport
 
     public function getPreset($preset)
     {
+        $preset = str_replace(' ', '', $preset);
+
         $presetClass = "\\Qirolab\\Theme\\Presets\\{$preset}Preset";
 
         if (class_exists($presetClass)) {

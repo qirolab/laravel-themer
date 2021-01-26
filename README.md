@@ -14,7 +14,7 @@ This Laravel package adds multi-theme support to your application. It also provi
 - Fallback theme support (Wordpress style); It allows creating a child theme to extend any theme
 - Provides a authentication scaffolding similar to `laravel/ui` & `laravel/breeze`
 - Exports all auth controllers, tests, and other files similar to `laravel/breeze`
-- Provides frontend presets for `bootstrap`, `tailwind`, `vue`, and `react`
+- Provides frontend presets for `Bootstrap`, `Tailwind`, `Vue 2`, `Vue 3` and `React`
 
 ## Installation and setup
 
