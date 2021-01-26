@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 1.4.0 - 2021-01-26
+- Added Vue 3 Preset
+
 ## 1.3.0 - 2021-01-26
 - Refactor code for preset export
 - Add `babelConfig` in `webpack.mix.js` for `preset-react` for Mix version 5.x
