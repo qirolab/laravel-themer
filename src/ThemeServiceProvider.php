@@ -6,7 +6,7 @@ use Facade\IgnitionContracts\SolutionProviderRepository;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 use Qirolab\Theme\Commands\MakeThemeCommand;
-use Qirolab\Theme\SolutionProviders\ThemeViewNotFoundSolutionProvider;
+use Qirolab\Theme\SolutionProviders\ThemeSolutionProvider;
 
 class ThemeServiceProvider extends ServiceProvider
 {
@@ -43,7 +43,7 @@ class ThemeServiceProvider extends ServiceProvider
             $solutionProvider = $this->app->make(SolutionProviderRepository::class);
 
             $solutionProvider->registerSolutionProvider(
-                ThemeViewNotFoundSolutionProvider::class
+                ThemeSolutionProvider::class
             );
         } catch (BindingResolutionException $error) {
         }
