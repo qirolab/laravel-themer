@@ -7,11 +7,13 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Qirolab\Theme\Presets\PresetExport;
 use Qirolab\Theme\Presets\Traits\AuthScaffolding;
+use Qirolab\Theme\Presets\Traits\PackagesTrait;
 use Qirolab\Theme\Theme;
 
 class MakeThemeCommand extends Command
 {
     use AuthScaffolding;
+    use PackagesTrait;
 
     /**
      * @var string
@@ -110,15 +112,32 @@ class MakeThemeCommand extends Command
 
     protected function askJsFramework()
     {
+        $jsFrameworks = $this->getAllowedJsFrameworks();
+
         $jsFramework = $this->choice(
             'Select Javascript Framework',
-            ['Vue 2', 'Vue 3', 'React', 'Skip'],
-            $default = 'Vue 2',
+            $jsFrameworks,
+            $jsFrameworks[0], // Default value
             $maxAttempts = null,
             $allowMultipleSelections = false
         );
 
         return $jsFramework;
+    }
+
+    public function getAllowedJsFrameworks() :array
+    {
+        $vueVersion = $this->getVueVersion($dev = true) ?? $this->getVueVersion($dev = false) ;
+
+        if ($vueVersion && $this->versionLessThan($vueVersion, '3.0.0')) {
+            return ['Vue 2', 'React', 'Skip'];
+        }
+
+        if ($vueVersion && $this->versionGreaterOrEqual($vueVersion, '3.0.0')) {
+            return ['Vue 3', 'React', 'Skip'];
+        }
+
+        return ['Vue 2', 'Vue 3', 'React', 'Skip'];
     }
 
     public function askAuthScaffolding()
