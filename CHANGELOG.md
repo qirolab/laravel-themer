@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 1.4.1 - 2021-01-28
+- Validate Vue version, if a specific Vue version is installed then cannot generate a theme for other Vue version.
+
 ## 1.4.0 - 2021-01-26
 - Added Vue 3 Preset
 
