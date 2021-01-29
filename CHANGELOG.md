@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 1.4.2 - 2021-01-29
+- `Theme::getViewPaths();` method added
+- Bug fix on register theme service provider
+
 ## 1.4.1 - 2021-01-28
 - Validate Vue version, if a specific Vue version is installed then cannot generate a theme for other Vue version.
 
