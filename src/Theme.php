@@ -50,4 +50,13 @@ class Theme
 
         return null;
     }
+
+    public static function getViewPaths(): array
+    {
+        if (self::finder()) {
+            return self::finder()->getViewFinder()->getPaths();
+        }
+
+        return app('view')->getFinder()->getPaths();
+    }
 }

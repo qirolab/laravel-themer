@@ -34,7 +34,7 @@ Run the following command in the terminal:
 ```bash
 php artisan make:theme
 ```
-<img src="https://i.imgur.com/qLy7Iex.png" alt="Create theme" />
+<img src="https://i.imgur.com/cAwLppV.png" alt="Create theme" />
 
 This command will ask you to enter theme name, CSS framework, js framework, and optional auth scaffolding.
 
@@ -55,10 +55,20 @@ Theme::clear();
 
 // Get theme path
 Theme::path($path = 'views');
-// output: app-root-path/themes/active-theme/views
+// output:
+// /app-root-path/themes/active-theme/views
 
 Theme::path($path = 'views', $themeName = 'admin');
-// output: app-root-path/themes/admin/views
+// output:
+// /app-root-path/themes/admin/views
+
+Theme::getViewPaths();
+// Output:
+// [
+//     '/app-root-path/themes/admin/views',
+//     '/app-root-path/resources/views'
+// ]
+
 ```
 
 ## Middleware to set a theme
