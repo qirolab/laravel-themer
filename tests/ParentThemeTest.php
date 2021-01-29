@@ -4,19 +4,18 @@ namespace Qirolab\Theme\Tests;
 
 use Illuminate\Support\Facades\View;
 use Qirolab\Theme\Theme;
+use Qirolab\Theme\ThemeServiceProvider;
 
 class ParentThemeTest extends TestCase
 {
-    /**
-     * Define environment setup.
-     *
-     * @param  \Illuminate\Foundation\Application $app
-     * @return void
-     */
-    protected function getEnvironmentSetUp($app)
+    protected function getPackageProviders($app)
     {
         $app['config']->set('theme.active', 'child-theme');
         $app['config']->set('theme.parent', 'parent-theme');
+
+        return [
+            ThemeServiceProvider::class,
+        ];
     }
 
     /** @test **/

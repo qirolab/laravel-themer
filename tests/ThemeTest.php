@@ -4,19 +4,18 @@ namespace Qirolab\Theme\Tests;
 
 use Illuminate\Support\Facades\View;
 use Qirolab\Theme\Theme;
+use Qirolab\Theme\ThemeServiceProvider;
 use Qirolab\Theme\ThemeViewFinder;
 
 class ThemeTest extends TestCase
 {
-    /**
-     * Define environment setup.
-     *
-     * @param  \Illuminate\Foundation\Application $app
-     * @return void
-     */
-    protected function getEnvironmentSetUp($app)
+    protected function getPackageProviders($app)
     {
         $app['config']->set('theme.active', 'default');
+
+        return [
+            ThemeServiceProvider::class,
+        ];
     }
 
     /** @test **/
@@ -116,5 +115,15 @@ class ThemeTest extends TestCase
         app()->forgetInstance('theme.finder');
 
         $this->assertNull(Theme::active());
+    }
+
+    /** @test **/
+    public function it_returns_all_view_paths()
+    {
+        $this->assertCount(2, Theme::getViewPaths());
+
+        Theme::set('child', 'parent');
+
+        $this->assertCount(3, Theme::getViewPaths());
     }
 }

@@ -5,6 +5,7 @@ namespace Qirolab\Theme\Tests;
 use Illuminate\Support\Facades\Route;
 use Qirolab\Theme\Middleware\ThemeMiddleware;
 use Qirolab\Theme\Theme;
+use Qirolab\Theme\ThemeServiceProvider;
 
 class ThemeMiddlewareTest extends TestCase
 {
@@ -21,16 +22,14 @@ class ThemeMiddlewareTest extends TestCase
         })->middleware('theme:frontend,parent');
     }
 
-    /**
-     * Define environment setup.
-     *
-     * @param  \Illuminate\Foundation\Application $app
-     * @return void
-     */
-    protected function getEnvironmentSetUp($app)
+    protected function getPackageProviders($app)
     {
         $app['router']->aliasMiddleware('theme', ThemeMiddleware::class);
         $app['config']->set('theme.active', 'default');
+
+        return [
+            ThemeServiceProvider::class,
+        ];
     }
 
     /** @test **/
