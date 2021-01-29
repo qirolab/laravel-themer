@@ -21,15 +21,15 @@ class ThemeServiceProvider extends ServiceProvider
                 MakeThemeCommand::class,
             ]);
         }
-
-        $this->registerThemeFinder();
-
-        $this->registerSolutionProvider();
     }
 
     public function register()
     {
         $this->mergeConfig();
+
+        $this->registerThemeFinder();
+
+        $this->registerSolutionProvider();
     }
 
     protected function mergeConfig(): void
