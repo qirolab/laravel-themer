@@ -23,7 +23,8 @@ class ThemeSolutionProvider implements HasSolutionsForThrowable
                 BaseSolution::create('Theme')
                     ->setSolutionDescription($message)
                     ->setDocumentationLinks([
-                        'Documentation' => 'https://qirolab.com/posts/laravel-themer-multi-theme-support-for-laravel-application-1609688215',
+                        'Documentation' => 'https://github.com/qirolab/laravel-themer',
+                        'Video Tutorial' => 'https://www.youtube.com/watch?v=Ty4ZwFTLYXE',
                     ]),
             ];
         }

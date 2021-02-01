@@ -11,10 +11,19 @@ This Laravel package adds multi-theme support to your application. It also provi
 
 ## Features
 - Any number of themes
-- Fallback theme support (Wordpress style); It allows creating a child theme to extend any theme
-- Provides a authentication scaffolding similar to `laravel/ui` & `laravel/breeze`
+- Fallback theme support (WordPress style); It allows creating a child theme to extend any theme
+- Provides authentication scaffolding similar to `laravel/ui` & `laravel/breeze`
 - Exports all auth controllers, tests, and other files similar to `laravel/breeze`
 - Provides frontend presets for `Bootstrap`, `Tailwind`, `Vue 2`, `Vue 3` and `React`
+
+If you don't want to use auth scaffolding of this package, instead you want to
+use Laravel Fortify, no problem with that. You can use Laravel Themer with
+Fortify.  Laravel Fortify only gives backend implementation authentication, it
+does not provide views or frontend presets. So, use Fortify for backend auth and
+Laravel Themer for views and presets.
+
+## Tutorial
+Here is the video for **[Laravel Themer Tutorial](https://www.youtube.com/watch?v=Ty4ZwFTLYXE)**.
 
 ## Installation and setup
 
@@ -162,8 +171,7 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
 ## Credits
-Authentication scaffolding stubs and presets are taken from [Laravel
-UI](https://github.com/laravel/ui) and [Laravel Breeze](https://github.com/laravel/breeze).
+Authentication scaffolding stubs and presets are taken from [laravel/ui](https://github.com/laravel/ui), [laravel/breeze](https://github.com/laravel/breeze), and [laravel-frontend-presets/tailwindcss](https://github.com/laravel-frontend-presets/tailwindcss).
 
 - [Harish Kumar](https://github.com/hkp22)
 - [All Contributors](../../contributors)
