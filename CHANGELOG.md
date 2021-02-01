@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 1.4.3 - 2021-02-01
+- Video links updated in the `ThemeSolutionProvider`
+
 ## 1.4.2 - 2021-01-29
 - `Theme::getViewPaths();` method added
 - Bug fix on register theme service provider
