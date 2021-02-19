@@ -18,18 +18,18 @@ class ThemeSolutionProvider implements HasSolutionsForThrowable
     {
         $message = $this->getMessage();
 
-        if ($message) {
-            return [
-                BaseSolution::create('Theme')
-                    ->setSolutionDescription($message)
-                    ->setDocumentationLinks([
-                        'Documentation' => 'https://github.com/qirolab/laravel-themer',
-                        'Video Tutorial' => 'https://www.youtube.com/watch?v=Ty4ZwFTLYXE',
-                    ]),
-            ];
+        if (app()->runningInConsole() || ! $message) {
+            return [];
         }
 
-        return [];
+        return [
+            BaseSolution::create('Theme')
+                ->setSolutionDescription($message)
+                ->setDocumentationLinks([
+                    'Documentation' => 'https://github.com/qirolab/laravel-themer',
+                    'Video Tutorial' => 'https://www.youtube.com/watch?v=Ty4ZwFTLYXE',
+                ]),
+        ];
     }
 
     public function getMessage(): string
