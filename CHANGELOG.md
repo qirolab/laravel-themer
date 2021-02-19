@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 1.4.4 - 2021-02-20
+- Bug fix theme solution provider
+
 ## 1.4.3 - 2021-02-01
 - Video links updated in the `ThemeSolutionProvider`
 
