@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 1.5.0 - 2021-05-30
+- Tailwind and Bootstrap stubs modified
+- Tailwind package update
+- Drop support for Laravel version 5.8 and 6.x
+- .php_cs.dist rename to .php-cs-fixer.dist.php
+
 ## 1.4.4 - 2021-02-20
 - Bug fix theme solution provider
 
