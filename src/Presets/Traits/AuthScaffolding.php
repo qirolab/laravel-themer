@@ -105,7 +105,7 @@ trait AuthScaffolding
             );
         }
 
-        if (!file_exists(base_path($routeFile)) || $overwrite) {
+        if (! file_exists(base_path($routeFile)) || $overwrite) {
             copy(__DIR__ . '/../../../stubs/routes/auth.php', base_path('routes/auth.php'));
 
             $homeRoute = "
@@ -117,7 +117,7 @@ Route::get('/home', function () {
 ";
             $requireAuth = "require __DIR__.'/auth.php';";
 
-            if (!exec('grep ' . escapeshellarg($requireAuth) . ' ' . base_path('routes/web.php'))) {
+            if (! exec('grep ' . escapeshellarg($requireAuth) . ' ' . base_path('routes/web.php'))) {
                 $this->append(
                     base_path('routes/web.php'),
                     $homeRoute . $requireAuth
@@ -160,7 +160,7 @@ Route::get('/home', function () {
                 );
             }
 
-            if (!file_exists($publishPath) || $overwrite) {
+            if (! file_exists($publishPath) || $overwrite) {
                 copy(
                     __DIR__ . '/../../../stubs/' . $file,
                     $publishPath
