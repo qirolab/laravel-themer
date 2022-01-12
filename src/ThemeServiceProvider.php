@@ -3,6 +3,7 @@
 namespace Qirolab\Theme;
 
 use Facade\IgnitionContracts\SolutionProviderRepository;
+use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 use Qirolab\Theme\Commands\MakeThemeCommand;
@@ -21,6 +22,12 @@ class ThemeServiceProvider extends ServiceProvider
                 MakeThemeCommand::class,
             ]);
         }
+
+        $this->mergeConfig();
+
+        $this->registerThemeFinder();
+
+        $this->registerSolutionProvider();
     }
 
     public function register()
@@ -51,14 +58,16 @@ class ThemeServiceProvider extends ServiceProvider
 
     protected function registerThemeFinder(): void
     {
-        $this->app->singleton('theme.finder', function ($app) {
-            $themeFinder = new ThemeViewFinder(
-                $app['files'],
-                $app['config']['view.paths']
-            );
 
-            $themeFinder->setHints(
-                $this->app->make('view')->getFinder()->getHints()
+        $this->app->singleton('theme.finder', function ($app) {
+            // $themeFinder = new ThemeViewFinder(
+            //     $app['files'],
+            //     $app['config']['view.paths']
+            // );
+
+            $themeFinder = new ThemeViewFinder(
+                Container::getInstance()->make('files'),
+                Container::getInstance()->make('config')['view.paths']
             );
 
             return $themeFinder;

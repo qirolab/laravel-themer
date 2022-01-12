@@ -23,10 +23,11 @@ class TailwindPreset
     protected static function updatePackageArray(array $packages): array
     {
         return [
-            '@tailwindcss/forms' => '^0.3.2',
+            '@tailwindcss/forms' => '^0.4.0',
+            'autoprefixer' => '^10.4.2',
+            'postcss' => '^8.4.5',
             'postcss-import' => '^14.0.2',
-            'tailwindcss' => '^2.1.2',
-            'autoprefixer' => '^10.2.6',
+            'tailwindcss' => '^3.0.13',
         ] + $packages;
     }
 
@@ -40,13 +41,13 @@ class TailwindPreset
         $this->ensureDirectoryExists($this->themePath('js'));
         $this->ensureDirectoryExists($this->themePath('css'));
 
-        copy(__DIR__ . '/../../stubs/Presets/tailwind-stubs/tailwind.config.js', $this->themePath('tailwind.config.js'));
+        copy(__DIR__.'/../../stubs/Presets/tailwind-stubs/tailwind.config.js', $this->themePath('tailwind.config.js'));
 
         if (! $this->exists($this->themePath('js/app.js'))) {
-            copy(__DIR__ . '/../../stubs/Presets/tailwind-stubs/js/app.js', $this->themePath('js/app.js'));
+            copy(__DIR__.'/../../stubs/Presets/tailwind-stubs/js/app.js', $this->themePath('js/app.js'));
         }
 
-        copy(__DIR__ . '/../../stubs/Presets/tailwind-stubs/css/app.css', $this->themePath('css/app.css'));
+        copy(__DIR__.'/../../stubs/Presets/tailwind-stubs/css/app.css', $this->themePath('css/app.css'));
 
         return $this;
     }

@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 1.6.0 - 2022-01-12
+- Tailwind package update
+
 ## 1.5.0 - 2021-05-30
 - Tailwind and Bootstrap stubs modified
 - Tailwind package update
