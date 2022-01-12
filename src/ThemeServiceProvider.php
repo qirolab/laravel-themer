@@ -3,7 +3,7 @@
 namespace Qirolab\Theme;
 
 use Facade\IgnitionContracts\SolutionProviderRepository;
-use Illuminate\Container\Container;
+// use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 use Qirolab\Theme\Commands\MakeThemeCommand;
@@ -15,19 +15,13 @@ class ThemeServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/theme.php' => config_path('theme.php'),
+                __DIR__.'/../config/theme.php' => config_path('theme.php'),
             ], 'config');
 
             $this->commands([
                 MakeThemeCommand::class,
             ]);
         }
-
-        $this->mergeConfig();
-
-        $this->registerThemeFinder();
-
-        $this->registerSolutionProvider();
     }
 
     public function register()
@@ -41,7 +35,7 @@ class ThemeServiceProvider extends ServiceProvider
 
     protected function mergeConfig(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/theme.php', 'theme');
+        $this->mergeConfigFrom(__DIR__.'/../config/theme.php', 'theme');
     }
 
     protected function registerSolutionProvider(): void
@@ -59,14 +53,18 @@ class ThemeServiceProvider extends ServiceProvider
     protected function registerThemeFinder(): void
     {
         $this->app->singleton('theme.finder', function ($app) {
+            $themeFinder = new ThemeViewFinder(
+                $app['files'],
+                $app['config']['view.paths']
+            );
+
             // $themeFinder = new ThemeViewFinder(
-            //     $app['files'],
-            //     $app['config']['view.paths']
+            //     Container::getInstance()->make('files'),
+            //     Container::getInstance()->make('config')['view.paths']
             // );
 
-            $themeFinder = new ThemeViewFinder(
-                Container::getInstance()->make('files'),
-                Container::getInstance()->make('config')['view.paths']
+            $themeFinder->setHints(
+                $this->app->make('view')->getFinder()->getHints()
             );
 
             return $themeFinder;
