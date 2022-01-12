@@ -58,7 +58,6 @@ class ThemeServiceProvider extends ServiceProvider
 
     protected function registerThemeFinder(): void
     {
-
         $this->app->singleton('theme.finder', function ($app) {
             // $themeFinder = new ThemeViewFinder(
             //     $app['files'],
