@@ -1,13 +1,15 @@
 <?php
 
-namespace Qirolab\Theme\Presets;
+namespace Qirolab\Theme\Presets\Vite;
 
 use Qirolab\Theme\Presets\Traits\HandleFiles;
+use Qirolab\Theme\Presets\Traits\StubTrait;
 use Qirolab\Theme\Theme;
 
-class PresetExport
+class VitePresetExport
 {
     use HandleFiles;
+    use StubTrait;
 
     /**
      * @var string
@@ -48,14 +50,14 @@ class PresetExport
             $this->jsPreset()->export();
         }
 
-        $this->exportWebpackMix();
+        $this->exportViteConfig();
     }
 
     public function getPreset($preset)
     {
         $preset = str_replace(' ', '', $preset);
 
-        $presetClass = "\\Qirolab\\Theme\\Presets\\{$preset}Preset";
+        $presetClass = "\\Qirolab\\Theme\\Presets\\Vite\\{$preset}Preset";
 
         if (class_exists($presetClass)) {
             return new $presetClass($this);
@@ -75,42 +77,36 @@ class PresetExport
         return $this->getPreset($this->jsFramework);
     }
 
-    public function exportWebpackMix(): void
+    public function exportViteConfig()
     {
-        copy(__DIR__ . '/../../stubs/Presets/webpack.mix.js', Theme::path('webpack.mix.js', $this->theme));
+        $placeHolders = [
+            '%app_css_input%',
+            '%theme_path%',
+            '%css_config%',
+            '%vue_import%',
+            '%vue_plugin_config%',
+            '%react_import%',
+            '%react_plugin_config%',
+            '%bootstrap%',
+        ];
 
-        $mix = '';
+        $themePath = $this->relativeThemePath($this->theme);
 
-        if ($mixJs = $this->webpackJs()) {
-            $mix .= "\n    " . $mixJs;
+        $configData = file_get_contents($this->stubPath('vite.config.js')) ?? '';
+        $configData = str_replace('%theme_path%', $themePath.DIRECTORY_SEPARATOR, $configData);
+
+        if ($this->cssPreset()) {
+            $configData = $this->cssPreset()->updateViteConfig($configData);
         }
 
-        if ($mixCss = $this->webpackCss()) {
-            $mix .= "\n    " . $mixCss;
+        if ($this->jsPreset()) {
+            $configData = $this->jsPreset()->updateViteConfig($configData);
         }
 
-        if ($mix) {
-            $mix = 'mix.setPublicPath("public/themes/' . $this->theme . '")' . $mix . ';';
+        foreach ($placeHolders as $placeHolder) {
+            $configData = str_replace($placeHolder, '', $configData);
         }
 
-        $this->append(Theme::path('webpack.mix.js', $this->theme), $mix);
-    }
-
-    public function webpackJs()
-    {
-        if ($this->cssPreset() && method_exists($this->cssPreset(), 'webpackJs')) {
-            return $this->cssPreset()->webpackJs();
-        }
-
-        if ($this->jsPreset() && method_exists($this->jsPreset(), 'webpackJs')) {
-            return $this->jsPreset()->webpackJs();
-        }
-    }
-
-    public function webpackCss()
-    {
-        if ($this->cssPreset() && method_exists($this->cssPreset(), 'webpackCss')) {
-            return $this->cssPreset()->webpackCss();
-        }
+        $this->createFile(Theme::path('vite.config.js', $this->theme), $configData);
     }
 }

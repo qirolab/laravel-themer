@@ -1,12 +1,14 @@
 <?php
 
-namespace Qirolab\Theme\Presets;
+namespace Qirolab\Theme\Presets\Vite;
 
 use Qirolab\Theme\Presets\Traits\PresetTrait;
+use Qirolab\Theme\Presets\Traits\StubTrait;
 
 class Vue3Preset
 {
     use PresetTrait;
+    use StubTrait;
 
     public function export(): void
     {
@@ -24,12 +26,13 @@ class Vue3Preset
     protected static function updatePackageArray(array $packages): array
     {
         return [
-            '@vue/compiler-sfc' => '^3.0.5',
-            'resolve-url-loader' => '^3.1.2',
-            'sass' => '^1.32.1',
-            'sass-loader' => '^10.1.1',
-            'vue' => '^3.0.5',
-            'vue-loader' => '^16.1.2',
+            '@vitejs/plugin-vue' => '^2.3.3',
+            // '@vue/compiler-sfc' => '^3.2.37',
+            // 'resolve-url-loader' => '^5.0.0',
+            // 'sass' => '^1.53.0',
+            // 'sass-loader' => '^13.0.2',
+            'vue' => '^3.2.37',
+            // 'vue-loader' => '^17.0.0',
         ] + $packages;
 
         // return [
@@ -52,10 +55,10 @@ class Vue3Preset
      */
     protected function exportJs()
     {
-        copy(__DIR__ . '/../../stubs/Presets/vue3-stubs/app.js', $this->themePath('js/app.js'));
+        copy($this->stubPath('vue3-stubs/app.js'), $this->themePath('js/app.js'));
 
         if (! $this->exists($this->themePath('js/bootstrap.js'))) {
-            copy(__DIR__ . '/../../stubs/Presets/vue3-stubs/bootstrap.js', $this->themePath('js/bootstrap.js'));
+            copy($this->stubPath('vue3-stubs/bootstrap.js'), $this->themePath('js/bootstrap.js'));
         }
 
         return $this;
@@ -71,21 +74,28 @@ class Vue3Preset
         $this->ensureDirectoryExists($this->themePath('js/components'));
 
         copy(
-            __DIR__ . '/../../stubs/Presets/vue3-stubs/ExampleComponent.vue',
+            $this->stubPath('vue3-stubs/ExampleComponent.vue'),
             $this->themePath('js/components/ExampleComponent.vue')
         );
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function webpackJs()
+    public function updateViteConfig($configData)
     {
-        $jsMix = '.js(`${__dirname}/js/app.js`, "js")';
-        $jsMix .= "\n    .vue()";
+        $vueImport = "import vue from '@vitejs/plugin-vue';";
+        $vueConfig = 'vue({
+            template: {
+                transformAssetUrls: {
+                    base: null,
+                    includeAbsolute: false,
+                },
+            },
+        }),';
 
-        return $jsMix;
+        $configData = str_replace('%vue_import%', $vueImport, $configData);
+        $configData = str_replace('%vue_plugin_config%', $vueConfig, $configData);
+
+        return $configData;
     }
 }

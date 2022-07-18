@@ -2,11 +2,14 @@
 
 namespace Qirolab\Theme\Presets\Traits;
 
+use Qirolab\Theme\Enums\CssFramework;
+use Qirolab\Theme\Enums\JsFramework;
 use Qirolab\Theme\Theme;
 
 trait AuthScaffolding
 {
     use HandleFiles;
+    use StubTrait;
 
     public function themePath($path = '')
     {
@@ -29,7 +32,7 @@ trait AuthScaffolding
         }
     }
 
-    public function exportControllers() :self
+    public function exportControllers(): self
     {
         $this->ensureDirectoryExists(app_path('Http/Controllers/Auth'));
 
@@ -49,7 +52,7 @@ trait AuthScaffolding
         return $this;
     }
 
-    public function exportComponents() :self
+    public function exportComponents(): self
     {
         $this->ensureDirectoryExists(app_path('View/Components'));
 
@@ -81,12 +84,22 @@ trait AuthScaffolding
         $this->ensureDirectoryExists(Theme::path('views', $this->theme));
 
         $this->copyDirectory(
-            __DIR__ . "/../../../stubs/resources/{$this->cssFramework}/views",
+            __DIR__."/../../../stubs/resources/{$this->cssFramework}/views",
             Theme::path('views', $this->theme)
         );
 
-        $this->replaceInFile('%theme%', $this->theme, Theme::path('views/layouts/app.blade.php', $this->theme));
-        $this->replaceInFile('%theme%', $this->theme, Theme::path('views/layouts/guest.blade.php', $this->theme));
+        $themePath = $this->relativeThemePath($this->theme);
+
+        $cssPath = $themePath.($this->cssFramework === CssFramework::Bootstrap ? '/sass/app.scss' : '/css/app.css');
+        $jsPath = $themePath.'/js/app.js';
+        $viteConfig = "@vite(['".$cssPath."', '".$jsPath."'])";
+
+        if ($this->jsFramework === JsFramework::React) {
+            $viteConfig = '@viteReactRefresh'."\n    ".$viteConfig;
+        }
+
+        $this->replaceInFile('%vite%', $viteConfig, Theme::path('views/layouts/app.blade.php', $this->theme));
+        $this->replaceInFile('%vite%', $viteConfig, Theme::path('views/layouts/guest.blade.php', $this->theme));
 
         return $this;
     }
@@ -99,14 +112,14 @@ trait AuthScaffolding
 
         if (file_exists(base_path($routeFile))) {
             $overwrite = $this->confirm(
-                "<fg=red>{$routeFile} already exists.</fg=red>\n " .
+                "<fg=red>{$routeFile} already exists.</fg=red>\n ".
                     'Do you want to overwrite?',
                 false
             );
         }
 
         if (! file_exists(base_path($routeFile)) || $overwrite) {
-            copy(__DIR__ . '/../../../stubs/routes/auth.php', base_path('routes/auth.php'));
+            copy(__DIR__.'/../../../stubs/routes/auth.php', base_path('routes/auth.php'));
 
             $homeRoute = "
 
@@ -117,10 +130,10 @@ Route::get('/home', function () {
 ";
             $requireAuth = "require __DIR__.'/auth.php';";
 
-            if (! exec('grep ' . escapeshellarg($requireAuth) . ' ' . base_path('routes/web.php'))) {
+            if (! exec('grep '.escapeshellarg($requireAuth).' '.base_path('routes/web.php'))) {
                 $this->append(
                     base_path('routes/web.php'),
-                    $homeRoute . $requireAuth
+                    $homeRoute.$requireAuth
                 );
             }
         }
@@ -154,7 +167,7 @@ Route::get('/home', function () {
 
             if (file_exists($publishPath)) {
                 $overwrite = $this->confirm(
-                    "<fg=red>{$file} already exists.</fg=red>\n " .
+                    "<fg=red>{$file} already exists.</fg=red>\n ".
                     'Do you want to overwrite?',
                     false
                 );
@@ -162,7 +175,7 @@ Route::get('/home', function () {
 
             if (! file_exists($publishPath) || $overwrite) {
                 copy(
-                    __DIR__ . '/../../../stubs/' . $file,
+                    __DIR__.'/../../../stubs/'.$file,
                     $publishPath
                 );
             }

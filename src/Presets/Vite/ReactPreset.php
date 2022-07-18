@@ -1,12 +1,14 @@
 <?php
 
-namespace Qirolab\Theme\Presets;
+namespace Qirolab\Theme\Presets\Vite;
 
 use Qirolab\Theme\Presets\Traits\PresetTrait;
+use Qirolab\Theme\Presets\Traits\StubTrait;
 
 class ReactPreset
 {
     use PresetTrait;
+    use StubTrait;
 
     public function export(): void
     {
@@ -24,9 +26,10 @@ class ReactPreset
     protected static function updatePackageArray(array $packages): array
     {
         return [
-            '@babel/preset-react' => '^7.12.10',
-            'react' => '^17.0.1',
-            'react-dom' => '^17.0.1',
+            '@vitejs/plugin-react' => '^1.3.2',
+            // '@babel/preset-react' => '^7.18.6',
+            'react' => '^18.2.0',
+            'react-dom' => '^18.2.0',
         ] + $packages;
 
         // return [
@@ -43,10 +46,10 @@ class ReactPreset
      */
     protected function exportJs()
     {
-        copy(__DIR__ . '/../../stubs/Presets/react-stubs/app.js', $this->themePath('js/app.js'));
+        copy($this->stubPath('react-stubs/app.js'), $this->themePath('js/app.js'));
 
         if (! $this->exists($this->themePath('js/bootstrap.js'))) {
-            copy(__DIR__ . '/../../stubs/Presets/react-stubs/bootstrap.js', $this->themePath('js/bootstrap.js'));
+            copy($this->stubPath('react-stubs/bootstrap.js'), $this->themePath('js/bootstrap.js'));
         }
 
         // if (!$this->exists(base_path('.babelrc'))) {
@@ -66,27 +69,21 @@ class ReactPreset
         $this->ensureDirectoryExists($this->themePath('js/components'));
 
         copy(
-            __DIR__ . '/../../stubs/Presets/react-stubs/Example.js',
-            $this->themePath('js/components/Example.js')
+            $this->stubPath('react-stubs/Example.jsx'),
+            $this->themePath('js/components/Example.jsx')
         );
 
         return $this;
     }
 
-    public function webpackJs()
+    public function updateViteConfig($configData)
     {
-        if ($mixVersion = $this->getMixVersion()) {
-            if (version_compare($mixVersion, '6.0.0', '<')) {
-                return '.js(`${__dirname}/js/app.js`, "js")
-    .babelConfig({
-        presets: ["@babel/preset-react"]
-    })';
-            }
+        $reactImport = "import react from '@vitejs/plugin-react';";
+        $reactConfig = 'react(),';
 
-            $jsMix = '.js(`${__dirname}/js/app.js`, "js")';
-            $jsMix .= "\n    .react()";
+        $configData = str_replace('%react_import%', $reactImport, $configData);
+        $configData = str_replace('%react_plugin_config%', $reactConfig, $configData);
 
-            return $jsMix;
-        }
+        return $configData;
     }
 }

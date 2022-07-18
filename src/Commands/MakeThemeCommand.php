@@ -4,16 +4,18 @@ namespace Qirolab\Theme\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Qirolab\Theme\Presets\PresetExport;
+use Qirolab\Theme\Enums\CssFramework;
+use Qirolab\Theme\Enums\JsFramework;
 use Qirolab\Theme\Presets\Traits\AuthScaffolding;
 use Qirolab\Theme\Presets\Traits\PackagesTrait;
-use Qirolab\Theme\Theme;
+use Qirolab\Theme\Presets\Traits\StubTrait;
+use Qirolab\Theme\Presets\Vite\VitePresetExport;
 
 class MakeThemeCommand extends Command
 {
     use AuthScaffolding;
     use PackagesTrait;
+    use StubTrait;
 
     /**
      * @var string
@@ -56,7 +58,7 @@ class MakeThemeCommand extends Command
 
             $authScaffolding = $this->askAuthScaffolding();
 
-            (new PresetExport(
+            (new VitePresetExport(
                 $this->theme,
                 $this->cssFramework,
                 $this->jsFramework
@@ -73,12 +75,22 @@ class MakeThemeCommand extends Command
 
             $this->info("Theme scaffolding installed successfully.\n");
 
-            $replaced = Str::replaceFirst(base_path(), '${__dirname}', 'require(`' . Theme::path('webpack.mix.js', $this->theme) . '`);');
-            $this->comment('Add following line in your root "<fg=blue>webpack.mix.js</fg=blue>" file:');
-            $this->line($replaced, 'fg=magenta');
+            $themePath = $this->relativeThemePath($this->theme);
+            $scriptDevCmd = '    "dev:'.$this->theme.'": "vite --config '.$themePath.'/vite.config.js",';
+            $scriptBuildCmd = '    "build:'.$this->theme.'": "vite build --config '.$themePath.'/vite.config.js"';
+
+            $this->comment('Add following line in the `<fg=blue>scripts</fg=blue>` section of the `<fg=blue>package.json</fg=blue>` file:');
+            $this->line('');
+
+            $this->line('"scripts": {', 'fg=magenta');
+            $this->line('    ...', 'fg=magenta');
+            $this->line('');
+            $this->line($scriptDevCmd, 'fg=magenta');
+            $this->line($scriptBuildCmd, 'fg=magenta');
+            $this->line('}');
 
             $this->line('');
-            $this->comment('And please run "<fg=blue>npm install && npm run dev</fg=blue>" to compile your fresh scaffolding.');
+            $this->comment('And please run `<fg=blue>npm install && npm run dev:'.$this->theme.'</fg=blue>` to compile your fresh scaffolding.');
         }
     }
 
@@ -99,10 +111,16 @@ class MakeThemeCommand extends Command
 
     protected function askCssFramework()
     {
+        $options = [
+            CssFramework::Bootstrap,
+            CssFramework::Tailwind,
+            'Skip',
+        ];
+
         $cssFramework = $this->choice(
             'Select CSS Framework',
-            ['Bootstrap', 'Tailwind', 'Skip'],
-            $default = 'Bootstrap',
+            $options,
+            $default = $options[0],
             $maxAttempts = null,
             $allowMultipleSelections = false
         );
@@ -112,12 +130,16 @@ class MakeThemeCommand extends Command
 
     protected function askJsFramework()
     {
-        $jsFrameworks = $this->getAllowedJsFrameworks();
+        $options = [
+            JsFramework::Vue3,
+            JsFramework::React,
+            'Skip',
+        ];
 
         $jsFramework = $this->choice(
             'Select Javascript Framework',
-            $jsFrameworks,
-            $jsFrameworks[0], // Default value
+            $options,
+            $options[0], // Default value
             $maxAttempts = null,
             $allowMultipleSelections = false
         );
@@ -125,27 +147,18 @@ class MakeThemeCommand extends Command
         return $jsFramework;
     }
 
-    public function getAllowedJsFrameworks() :array
-    {
-        $vueVersion = $this->getVueVersion($dev = true) ?? $this->getVueVersion($dev = false) ;
-
-        if ($vueVersion && $this->versionLessThan($vueVersion, '3.0.0')) {
-            return ['Vue 2', 'React', 'Skip'];
-        }
-
-        if ($vueVersion && $this->versionGreaterOrEqual($vueVersion, '3.0.0')) {
-            return ['Vue 3', 'React', 'Skip'];
-        }
-
-        return ['Vue 2', 'Vue 3', 'React', 'Skip'];
-    }
-
     public function askAuthScaffolding()
     {
+        $options = [
+            'Views Only',
+            'Controllers & Views',
+            'Skip',
+        ];
+
         $authScaffolding = $this->choice(
             'Publish Auth Scaffolding',
-            ['Views Only', 'Controllers & Views', 'Skip'],
-            $default = 'Views Only',
+            $options,
+            $default = $options[0],
             $maxAttempts = null,
             $allowMultipleSelections = false
         );
@@ -155,7 +168,7 @@ class MakeThemeCommand extends Command
 
     protected function themeExists(string $theme): bool
     {
-        $directory = config('theme.base_path') . DIRECTORY_SEPARATOR . $theme;
+        $directory = config('theme.base_path').DIRECTORY_SEPARATOR.$theme;
 
         if (is_dir($directory)) {
             $this->error("`{$theme}` theme already exists.");

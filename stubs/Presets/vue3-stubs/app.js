@@ -4,12 +4,13 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require("./bootstrap");
+import "./bootstrap";
 
 /**
  * We will create a fresh Vue application instance.
  */
-import { createApp } from "vue";
+// import { createApp } from "vue";
+import { createApp } from "vue/dist/vue.esm-bundler.js";
 
 const app = createApp({});
 
@@ -21,13 +22,14 @@ const app = createApp({});
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => app.component(key.split('/').pop().split('.')[0], files(key).default))
+// const files = import.meta.globEager("./components/*.vue");
+// for (const key in files) {
+//     app.component(key.split("/").pop().split(".")[0], files[key].default);
+// }
 
-app.component(
-    "example-component",
-    require("./components/ExampleComponent.vue").default
-);
+import ExampleComponent from "./components/ExampleComponent.vue";
+
+app.component("example-component", ExampleComponent);
 
 /**
  * Next, attach Vue application instance to the page. Then, you may begin adding components to this application

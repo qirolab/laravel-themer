@@ -10,11 +10,7 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ mix('css/app.css', 'themes/%theme%') }}">
-
-        <!-- Scripts -->
-        <script src="{{ mix('js/app.js', 'themes/%theme%') }}" defer></script>
+        %vite%
     </head>
     <body>
         <div id="app" class="font-sans antialiased text-gray-900">

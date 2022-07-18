@@ -14,59 +14,35 @@ trait HandleFiles
      * @param  bool   $recursive
      * @return void
      */
-    protected function ensureDirectoryExists($path, $mode = 0755, $recursive = true)
+    protected function ensureDirectoryExists(string $path, int $mode = 0755, bool $recursive = true)
     {
-        if (! (new Filesystem)->isDirectory($path)) {
-            (new Filesystem)->makeDirectory($path, $mode, $recursive);
+        if (! (new Filesystem())->isDirectory($path)) {
+            (new Filesystem())->makeDirectory($path, $mode, $recursive);
         }
     }
 
-    /**
-     * Replace a given string within a given file.
-     *
-     * @param  string $search
-     * @param  string $replace
-     * @param  string $path
-     * @return void
-     */
-    protected function replaceInFile($search, $replace, $path)
+    protected function replaceInFile(string $search, string $replace, string $path): int | false
     {
-        file_put_contents($path, str_replace($search, $replace, file_get_contents($path)));
+        return file_put_contents($path, str_replace($search, $replace, file_get_contents($path)));
     }
 
-    /**
-     * Copy a directory from one location to another.
-     *
-     * @param  string   $directory
-     * @param  string   $destination
-     * @param  int|null $options
-     * @return bool
-     */
-    public function copyDirectory($directory, $destination, $options = null)
+    public function createFile(string $path, string $content = ''): int | false
     {
-        return (new Filesystem)->copyDirectory($directory, $destination, $options);
+        return file_put_contents($path, $content);
     }
 
-    /**
-     * Determine if a file or directory exists.
-     *
-     * @param  string $path
-     * @return bool
-     */
-    public function exists($path)
-    {
-        return file_exists($path);
-    }
-
-    /**
-     * Append to a file.
-     *
-     * @param  string $path
-     * @param  string $data
-     * @return int
-     */
-    public function append($path, $data)
+    public function append(string $path, string $data): int | false
     {
         return file_put_contents($path, $data, FILE_APPEND);
+    }
+
+    public function copyDirectory(string $directory, string $destination, int | null $options = null): bool
+    {
+        return (new Filesystem())->copyDirectory($directory, $destination, $options);
+    }
+
+    public function exists(string $path): bool
+    {
+        return file_exists($path);
     }
 }

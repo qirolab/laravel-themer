@@ -1,12 +1,14 @@
 <?php
 
-namespace Qirolab\Theme\Presets;
+namespace Qirolab\Theme\Presets\Vite;
 
 use Qirolab\Theme\Presets\Traits\PresetTrait;
+use Qirolab\Theme\Presets\Traits\StubTrait;
 
 class BootstrapPreset
 {
     use PresetTrait;
+    use StubTrait;
 
     public function export(): void
     {
@@ -41,8 +43,14 @@ class BootstrapPreset
     {
         $this->ensureDirectoryExists($this->themePath('js'));
 
-        copy(__DIR__ . '/../../stubs/Presets/bootstrap-stubs/js/bootstrap.js', $this->themePath('js/bootstrap.js'));
-        copy(__DIR__ . '/../../stubs/Presets/bootstrap-stubs/js/app.js', $this->themePath('js/app.js'));
+        copy(
+            $this->stubPath('bootstrap-stubs/js/bootstrap.js'),
+            $this->themePath('js/bootstrap.js')
+        );
+        copy(
+            $this->stubPath('bootstrap-stubs/js/app.js'),
+            $this->themePath('js/app.js')
+        );
 
         return $this;
     }
@@ -56,23 +64,22 @@ class BootstrapPreset
     {
         $this->ensureDirectoryExists($this->themePath('sass'));
 
-        copy(__DIR__ . '/../../stubs/Presets/bootstrap-stubs/sass/_variables.scss', $this->themePath('sass/_variables.scss'));
-        copy(__DIR__ . '/../../stubs/Presets/bootstrap-stubs/sass/app.scss', $this->themePath('sass/app.scss'));
+        copy(
+            $this->stubPath('bootstrap-stubs/sass/_variables.scss'),
+            $this->themePath('sass/_variables.scss')
+        );
+        copy(
+            $this->stubPath('bootstrap-stubs/sass/app.scss'),
+            $this->themePath('sass/app.scss')
+        );
 
         return $this;
     }
 
-    public function webpackJs(): string
+    public function updateViteConfig($configData)
     {
-        if ($this->jsPreset() && method_exists($this->jsPreset(), 'webpackJs')) {
-            return $this->jsPreset()->webpackJs();
-        }
-
-        return '.js(`${__dirname}/js/app.js`, "js")';
-    }
-
-    public function webpackCss(): string
-    {
-        return '.sass(`${__dirname}/sass/app.scss`, "css")';
+        $configData = str_replace('%app_css_input%', 'sass/app.scss', $configData);
+        $bootstrap = "'~bootstrap': path.resolve('node_modules/bootstrap'),";
+        return str_replace('%bootstrap%', $bootstrap, $configData);
     }
 }
