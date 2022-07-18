@@ -2,6 +2,11 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 2.0.0 - 2022-07-19
+- Add Vite support
+- Drop support for Laravel mix
+- Drop support for Laravel v7.0, v8.0
+
 ## 1.7.1 - 2022-07-19
 - Update installation setup in README.md file
 
