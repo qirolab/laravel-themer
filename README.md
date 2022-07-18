@@ -29,7 +29,7 @@ Here is the video for **[Laravel Themer Tutorial](https://www.youtube.com/watch?
 
 You can install this package via composer using:
 ```bash
-composer require qirolab/laravel-themer
+composer require qirolab/laravel-themer:1.7.1
 ```
 
 Publish a configuration file:
