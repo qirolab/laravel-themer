@@ -29,8 +29,13 @@ Here is the video for **[Laravel Themer Tutorial](https://www.youtube.com/watch?
 
 You can install this package via composer using:
 ```bash
-composer require qirolab/laravel-themer:1.7.1
+composer require qirolab/laravel-themer
 ```
+
+> **_NOTE:_**
+>
+> Laravel Themer v2.x and the above versions support **Vite**.
+> If you want to use **Laravel Mix** then try **[Laravel Themer v1.7.1](https://github.com/qirolab/laravel-themer/tree/1.7.1 "Laravel Themer v1.7.1")**
 
 Publish a configuration file:
 ```bash
@@ -43,9 +48,9 @@ Run the following command in the terminal:
 ```bash
 php artisan make:theme
 ```
-<img src="https://i.imgur.com/cAwLppV.png" alt="Create theme" />
-
 This command will ask you to enter theme name, CSS framework, js framework, and optional auth scaffolding.
+
+<img src="https://i.imgur.com/HDhORv1.png" alt="Create theme" />
 
 ## Useful Theme methods:
 
@@ -108,39 +113,24 @@ Route::get('/dashboard', 'DashboardController@index')
 ```
 
 ## Asset compilation
- To compile the theme assets, you need to add the theme's `webpack.mix.js` in
- the root `webpack.mix.js`.
+ To compile the theme assets, first you need to add the following lines in the `scripts` section of the `package.json` file.
 
-```js
-// add this in the root `webpack.mix.js`
-require(`${__dirname}/themes/theme-name/webpack.mix.js`);
-```
-Now you can run the `npm install` and `npm run dev` command to compile theme assets.
+```json
+"scripts": {
+    ...
 
-If you add multiple `webpack.mix.js` of different themes in the root `webpack.mix.js`, then `webpack` may not compile these correctly. So, you should modify the root `webpack.mix.js` with the following code:
-```js
-let theme = process.env.npm_config_theme;
-
-if(theme) {
-   require(`${__dirname}/themes/${theme}/webpack.mix.js`);
-} else {
-    // default theme to compile if theme is not specified
-  require(`${__dirname}/themes/theme-name/webpack.mix.js`);
+    "dev:theme-name": "vite --config themes/theme-name/vite.config.js",
+    "build:theme-name": "vite build --config themes/theme-name/vite.config.js"
 }
 ```
-
 Now, to compile a particular theme run the following command:
 
 ```bash
-npm run dev --theme=theme-name
+npm run dev:theme-name
 
 # or
 
-npm run watch --theme=theme-name
-
-# or
-
-npm run production --theme=theme-name
+npm run build:theme-name
 ```
 
 ## Support us
