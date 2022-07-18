@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 1.7.1 - 2022-07-19
+- Update installation setup in README.md file
+
 ## 1.7.0 - 2022-02-11
 - Laravel 9.0 support
 
