@@ -92,7 +92,7 @@ class VitePresetExport
 
         $themePath = $this->relativeThemePath($this->theme);
 
-        $configData = file_get_contents($this->stubPath('vite.config.js')) ?? '';
+        $configData = file_get_contents($this->stubPath('vite.config.js'));
         $configData = str_replace('%theme_path%', $themePath.DIRECTORY_SEPARATOR, $configData);
 
         if ($this->cssPreset()) {

@@ -120,9 +120,9 @@ class MakeThemeCommand extends Command
         $cssFramework = $this->choice(
             'Select CSS Framework',
             $options,
-            $default = $options[0],
-            $maxAttempts = null,
-            $allowMultipleSelections = false
+            $_default = $options[0],
+            $_maxAttempts = null,
+            $_allowMultipleSelections = false
         );
 
         return $cssFramework;
@@ -139,9 +139,9 @@ class MakeThemeCommand extends Command
         $jsFramework = $this->choice(
             'Select Javascript Framework',
             $options,
-            $options[0], // Default value
-            $maxAttempts = null,
-            $allowMultipleSelections = false
+            $_default = $options[0], // Default value
+            $_maxAttempts = null,
+            $_allowMultipleSelections = false
         );
 
         return $jsFramework;
@@ -158,9 +158,9 @@ class MakeThemeCommand extends Command
         $authScaffolding = $this->choice(
             'Publish Auth Scaffolding',
             $options,
-            $default = $options[0],
-            $maxAttempts = null,
-            $allowMultipleSelections = false
+            $_default = $options[0],
+            $_maxAttempts = null,
+            $_allowMultipleSelections = false
         );
 
         return $authScaffolding;

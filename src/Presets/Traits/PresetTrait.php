@@ -2,7 +2,6 @@
 
 namespace Qirolab\Theme\Presets\Traits;
 
-use Qirolab\Theme\Presets\PresetExport;
 use Qirolab\Theme\Presets\Vite\VitePresetExport;
 use Qirolab\Theme\Theme;
 
@@ -12,11 +11,11 @@ trait PresetTrait
     use PackagesTrait;
 
     /**
-     * @var PresetExport|VitePresetExport
+     * @var VitePresetExport
      */
     public $exporter;
 
-    public function __construct(PresetExport | VitePresetExport $exporter)
+    public function __construct(VitePresetExport $exporter)
     {
         $this->exporter = $exporter;
     }

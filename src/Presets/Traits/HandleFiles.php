@@ -21,17 +21,17 @@ trait HandleFiles
         }
     }
 
-    protected function replaceInFile(string $search, string $replace, string $path): int | false
+    protected function replaceInFile(string $search, string $replace, string $path): int|bool
     {
         return file_put_contents($path, str_replace($search, $replace, file_get_contents($path)));
     }
 
-    public function createFile(string $path, string $content = ''): int | false
+    public function createFile(string $path, string $content = ''): int|bool
     {
         return file_put_contents($path, $content);
     }
 
-    public function append(string $path, string $data): int | false
+    public function append(string $path, string $data): int|bool
     {
         return file_put_contents($path, $data, FILE_APPEND);
     }
