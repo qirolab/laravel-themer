@@ -79,6 +79,7 @@ class TailwindPreset
     public function updateViteConfig($configData)
     {
         $configData = str_replace('%app_css_input%', 'css/app.css', $configData);
+
         return str_replace('%css_config%', $this->getViteConfig(), $configData);
     }
 }

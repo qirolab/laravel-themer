@@ -80,6 +80,7 @@ class BootstrapPreset
     {
         $configData = str_replace('%app_css_input%', 'sass/app.scss', $configData);
         $bootstrap = "'~bootstrap': path.resolve('node_modules/bootstrap'),";
+
         return str_replace('%bootstrap%', $bootstrap, $configData);
     }
 }
