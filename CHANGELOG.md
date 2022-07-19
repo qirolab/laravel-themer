@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 2.0.1 - 2022-07-19
+- Vue ViteJs plugin upgrade
+
 ## 2.0.0 - 2022-07-19
 - Add Vite support
 - Drop support for Laravel mix
