@@ -27,15 +27,15 @@ Here is the video for **[Laravel Themer Tutorial](https://www.youtube.com/watch?
 
 ## Installation and setup
 
+> **_NOTE:_**
+>
+> Laravel Themer v2.x and the above versions support **Vite**.
+> If you want to use **Laravel Mix** then try **[Laravel Themer v1.7.1](https://github.com/qirolab/laravel-themer/tree/1.7.1 "v1.7.1")**
+
 You can install this package via composer using:
 ```bash
 composer require qirolab/laravel-themer
 ```
-
-> **_NOTE:_**
->
-> Laravel Themer v2.x and the above versions support **Vite**.
-> If you want to use **Laravel Mix** then try **[Laravel Themer v1.7.1](https://github.com/qirolab/laravel-themer/tree/1.7.1 "Laravel Themer v1.7.1")**
 
 Publish a configuration file:
 ```bash
@@ -115,7 +115,7 @@ Route::get('/dashboard', 'DashboardController@index')
 ## Asset compilation
  To compile the theme assets, first you need to add the following lines in the `scripts` section of the `package.json` file.
 
-```json
+```
 "scripts": {
     ...
 
