@@ -26,7 +26,7 @@ class Vue3Preset
     protected static function updatePackageArray(array $packages): array
     {
         return [
-            '@vitejs/plugin-vue' => '^2.3.3',
+            '@vitejs/plugin-vue' => '^3.0.1',
             // '@vue/compiler-sfc' => '^3.2.37',
             // 'resolve-url-loader' => '^5.0.0',
             // 'sass' => '^1.53.0',
