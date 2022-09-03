@@ -9,6 +9,7 @@ export default defineConfig({
                 "{%theme_path%}/css/app.css", 
                 "{%theme_path%}/js/app.js"
             ],
+            buildDirectory: "%theme_name%",
         }),
         {
             name: "blade",

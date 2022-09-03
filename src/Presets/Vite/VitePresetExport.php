@@ -82,6 +82,7 @@ class VitePresetExport
         $placeHolders = [
             '%app_css_input%',
             '%theme_path%',
+            '%theme_name%',
             '%css_config%',
             '%vue_import%',
             '%vue_plugin_config%',
@@ -94,6 +95,7 @@ class VitePresetExport
 
         $configData = file_get_contents($this->stubPath('vite.config.js'));
         $configData = str_replace('%theme_path%', $themePath.DIRECTORY_SEPARATOR, $configData);
+        $configData = str_replace('%theme_name%', $this->theme, $configData);
 
         if ($this->cssPreset()) {
             $configData = $this->cssPreset()->updateViteConfig($configData);

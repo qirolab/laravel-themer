@@ -92,7 +92,7 @@ trait AuthScaffolding
 
         $cssPath = $themePath.($this->cssFramework === CssFramework::Bootstrap ? '/sass/app.scss' : '/css/app.css');
         $jsPath = $themePath.'/js/app.js';
-        $viteConfig = "@vite(['".$cssPath."', '".$jsPath."'])";
+        $viteConfig = "@vite(['".$cssPath."', '".$jsPath."'], '".$this->theme."')";
 
         if ($this->jsFramework === JsFramework::React) {
             $viteConfig = '@viteReactRefresh'."\n    ".$viteConfig;

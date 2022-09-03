@@ -11,6 +11,7 @@ export default defineConfig({
                 "%theme_path%%app_css_input%",
                 "%theme_path%js/app.js"
             ],
+            buildDirectory: "%theme_name%",
         }),
         %vue_plugin_config%
         %react_plugin_config%
