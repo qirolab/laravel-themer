@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 2.0.2 - 2022-09-04
+- Add build directory in `vite.config.js`.
+- Add theme path in `tailwind.config.js` content configuration.
+
 ## 2.0.1 - 2022-07-19
 - Vue ViteJs plugin upgrade
 
