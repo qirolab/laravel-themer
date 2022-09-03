@@ -44,6 +44,11 @@ class TailwindPreset
         $this->ensureDirectoryExists($this->themePath('css'));
 
         copy($this->stubPath('tailwind-stubs/tailwind.config.js'), $this->themePath('tailwind.config.js'));
+        $this->replaceInFile(
+            '%theme_path%',
+            $this->relativeThemePath($this->getTheme()),
+            $this->themePath('tailwind.config.js')
+        );
 
         if (! $this->exists($this->themePath('js/app.js'))) {
             copy(
