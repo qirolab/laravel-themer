@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 2.1.0 - 2023-02-14
+- Laravel 10.x support.
+
 ## 2.0.2 - 2022-09-04
 - Add build directory in `vite.config.js`.
 - Add theme path in `tailwind.config.js` content configuration.
