@@ -20,7 +20,7 @@
     "require": {
         "php": ">=7.1.0",
         "facade/ignition-contracts": "^1.0",
-        "illuminate/support": "^9.19|^10.0"
+        "illuminate/support": "^9.19|^10.0|^11.0"
     },
     "require-dev": {
         "orchestra/testbench": "^7.0|^8.0",
