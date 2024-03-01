@@ -133,6 +133,12 @@ npm run dev:theme-name
 npm run build:theme-name
 ```
 
+## Testing
+
+```bash
+composer test
+```
+
 ## Support us
 We invest a lot of resources into video tutorials and creating open-source packages. If you like what I do or if you ever made use of something I built or from my videos, consider supporting us. This will allow us to focus even more time on the tutorials and open-source projects we're working on.
 
@@ -142,11 +148,8 @@ src="https://i.imgur.com/zHowozE.png" alt="Buy Me A Coffee" style="height: 60px
 
 Thank you so much for helping us out! 🥰
 
-## Testing
-
-```bash
-composer test
-```
+## Download your copy of the eBook today and become a JavaScript pro
+[![JavaScript: ES2015 to ES2023](https://i.imgur.com/YyCohWc.png)](https://qirolab.gumroad.com/l/javascript-from-es2015-to-es2023)
 
 ## Changelog
 
