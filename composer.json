@@ -20,12 +20,12 @@
     "require": {
         "php": ">=7.1.0",
         "facade/ignition-contracts": "^1.0",
-        "illuminate/support": "^9.19|^10.0"
+        "illuminate/support": "^9.19|^10.0|^11.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^7.0|^8.0",
-        "phpunit/phpunit": "^8.3|^9.0",
-        "vimeo/psalm": "^4.0"
+        "orchestra/testbench": "^7.0|^8.0|^9.0",
+        "phpunit/phpunit": "^8.3|^9.0|^10.5",
+        "vimeo/psalm": "^4.0|^5.22"
     },
     "autoload": {
         "psr-4": {
