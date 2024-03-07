@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 2.2.1 - 2024-03-07
+- Fix psalm errors.
+
 ## 2.2.0 - 2024-03-07
 - Laravel 11.x support.
 
