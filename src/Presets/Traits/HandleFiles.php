@@ -21,22 +21,22 @@ trait HandleFiles
         }
     }
 
-    protected function replaceInFile(string $search, string $replace, string $path): int|bool
+    protected function replaceInFile(string $search, string $replace, string $path): bool
     {
-        return file_put_contents($path, str_replace($search, $replace, file_get_contents($path)));
+        return (bool) file_put_contents($path, str_replace($search, $replace, file_get_contents($path)));
     }
 
-    public function createFile(string $path, string $content = ''): int|bool
+    public function createFile(string $path, string $content = ''): bool
     {
-        return file_put_contents($path, $content);
+        return (bool) file_put_contents($path, $content);
     }
 
-    public function append(string $path, string $data): int|bool
+    public function append(string $path, string $data): bool
     {
-        return file_put_contents($path, $data, FILE_APPEND);
+        return (bool) file_put_contents($path, $data, FILE_APPEND);
     }
 
-    public function copyDirectory(string $directory, string $destination, int | null $options = null): bool
+    public function copyDirectory(string $directory, string $destination, $options = null): bool
     {
         return (new Filesystem())->copyDirectory($directory, $destination, $options);
     }
