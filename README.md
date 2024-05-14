@@ -148,8 +148,7 @@ src="https://i.imgur.com/zHowozE.png" alt="Buy Me A Coffee" style="height: 60px
 
 Thank you so much for helping us out! 🥰
 
-## Download your copy of the eBook today and become a JavaScript pro
-[![JavaScript: ES2015 to ES2023](https://i.imgur.com/YyCohWc.png)](https://qirolab.gumroad.com/l/javascript-from-es2015-to-es2023)
+[![Spec Coder](https://i.imgur.com/lqkt7a3.png)](https://qirolab.com/spec-coder)
 
 ## Changelog
 
