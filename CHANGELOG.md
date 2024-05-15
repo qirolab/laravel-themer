@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 2.3.2 - 2024-05-15
+- Update home route to dashboard
+
 ## 2.3.1 - 2024-05-15
 - Fix tailwindcss to vite preset
 
