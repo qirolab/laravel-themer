@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 2.3.1 - 2024-05-15
+- Fix tailwindcss to vite preset
+
 ## 2.3.0 - 2024-05-15
 - Fix update vite preset dependencies
 
