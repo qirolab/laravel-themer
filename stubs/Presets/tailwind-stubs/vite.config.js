@@ -1,14 +1,12 @@
 import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
 import path from "path";
+import tailwindcss from "tailwindcss";
 
 export default defineConfig({
     plugins: [
         laravel({
-            input: [
-                "{%theme_path%}/css/app.css", 
-                "{%theme_path%}/js/app.js"
-            ],
+            input: ["{%theme_path%}/css/app.css", "{%theme_path%}/js/app.js"],
             buildDirectory: "%theme_name%",
         }),
         {
@@ -26,7 +24,7 @@ export default defineConfig({
     css: {
         postcss: {
             plugins: [
-                require("tailwindcss")({
+                tailwindcss({
                     config: path.resolve(__dirname, "tailwind.config.js"),
                 }),
             ],

@@ -25,11 +25,11 @@ class TailwindPreset
     protected static function updatePackageArray(array $packages): array
     {
         return [
-            '@tailwindcss/forms' => '^0.5.2',
-            'autoprefixer' => '^10.4.7',
-            'postcss' => '^8.4.14',
-            'postcss-import' => '^14.1.0',
-            'tailwindcss' => '^3.1.6',
+            '@tailwindcss/forms' => '^0.5.7',
+            'autoprefixer' => '^10.4.19',
+            'postcss' => '^8.4.38',
+            'postcss-import' => '^16.1.0',
+            'tailwindcss' => '^3.4.3',
         ] + $packages;
     }
 
