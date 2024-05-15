@@ -123,9 +123,9 @@ trait AuthScaffolding
 
             $homeRoute = "
 
-Route::get('/home', function () {
-    return view('home');
-})->middleware(['auth'])->name('home');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 ";
             $requireAuth = "require __DIR__.'/auth.php';";
