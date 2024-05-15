@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-themer` will be documented in this file.
 
+## 2.3.0 - 2024-05-15
+- Fix update vite preset dependencies
+
 ## 2.2.1 - 2024-03-07
 - Fix psalm errors.
 
