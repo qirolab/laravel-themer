@@ -84,6 +84,7 @@ class VitePresetExport
             '%theme_path%',
             '%theme_name%',
             '%css_config%',
+            '%tailwind_import%',
             '%vue_import%',
             '%vue_plugin_config%',
             '%react_import%',

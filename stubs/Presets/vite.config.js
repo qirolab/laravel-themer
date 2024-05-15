@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
 import path from "path";
+%tailwind_import%
 %vue_import%
 %react_import%
 

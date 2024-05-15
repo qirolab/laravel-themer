@@ -73,7 +73,7 @@ class TailwindPreset
         return 'css: {
         postcss: {
             plugins: [
-                require("tailwindcss")({
+                tailwindcss({
                     config: path.resolve(__dirname, "tailwind.config.js"),
                 }),
             ],
@@ -84,6 +84,7 @@ class TailwindPreset
     public function updateViteConfig($configData)
     {
         $configData = str_replace('%app_css_input%', 'css/app.css', $configData);
+        $configData = str_replace('%tailwind_import%', 'import tailwindcss from "tailwindcss";', $configData);
 
         return str_replace('%css_config%', $this->getViteConfig(), $configData);
     }
