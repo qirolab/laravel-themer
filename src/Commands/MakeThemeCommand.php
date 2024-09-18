@@ -30,7 +30,27 @@ class MakeThemeCommand extends Command
     /**
      * @var string
      */
-    public $theme;
+    public $themeName;
+
+    /**
+     * @var string
+     */
+    public $themeAuthor;
+
+    /**
+     * @var string
+     */
+    public $themeDescription;
+
+    /**
+     * @var string
+     */
+    public $themeVersion;
+
+    /**
+     * @var string
+     */
+    public $themeThumbnail;
 
     /**
      * @var string
@@ -49,9 +69,9 @@ class MakeThemeCommand extends Command
 
     public function handle(): void
     {
-        $this->theme = $this->askTheme();
+        $this->askThemeMetadata();
 
-        if (! $this->themeExists($this->theme)) {
+        if (! $this->themeExists($this->themeName)) {
             $this->cssFramework = $this->askCssFramework();
 
             $this->jsFramework = $this->askJsFramework();
@@ -59,15 +79,16 @@ class MakeThemeCommand extends Command
             $authScaffolding = $this->askAuthScaffolding();
 
             (new VitePresetExport(
-                $this->theme,
+                $this->themeName,
                 $this->cssFramework,
                 $this->jsFramework
             ))
             ->export();
 
             $this->exportAuthScaffolding($authScaffolding);
+            $this->createFile($this->themePath('theme.json'), $this->themeJsonContent());
 
-            $this->line("<options=bold>Theme Name:</options=bold> {$this->theme}");
+            $this->line("<options=bold>Theme Name:</options=bold> {$this->themeName}");
             $this->line("<options=bold>CSS Framework:</options=bold> {$this->cssFramework}");
             $this->line("<options=bold>JS Framework:</options=bold> {$this->jsFramework}");
             $this->line("<options=bold>Auth Scaffolding:</options=bold> {$authScaffolding}");
@@ -75,9 +96,9 @@ class MakeThemeCommand extends Command
 
             $this->info("Theme scaffolding installed successfully.\n");
 
-            $themePath = $this->relativeThemePath($this->theme);
-            $scriptDevCmd = '    "dev:'.$this->theme.'": "vite --config '.$themePath.'/vite.config.js",';
-            $scriptBuildCmd = '    "build:'.$this->theme.'": "vite build --config '.$themePath.'/vite.config.js"';
+            $themePath = $this->relativeThemePath($this->themeName);
+            $scriptDevCmd = '    "dev:'.$this->themeName.'": "vite --config '.$themePath.'/vite.config.js",';
+            $scriptBuildCmd = '    "build:'.$this->themeName.'": "vite build --config '.$themePath.'/vite.config.js"';
 
             $this->comment('Add following line in the `<fg=blue>scripts</fg=blue>` section of the `<fg=blue>package.json</fg=blue>` file:');
             $this->line('');
@@ -90,23 +111,52 @@ class MakeThemeCommand extends Command
             $this->line('}');
 
             $this->line('');
-            $this->comment('And please run `<fg=blue>npm install && npm run dev:'.$this->theme.'</fg=blue>` to compile your fresh scaffolding.');
+            $this->comment('And please run `<fg=blue>npm install && npm run dev:'.$this->themeName.'</fg=blue>` to compile your fresh scaffolding.');
         }
     }
 
-    protected function askTheme()
+    protected function themeJsonContent()
     {
-        $theme = $this->argument('theme');
+        return json_encode([
+            'name' => $this->themeName,
+            'author' => $this->themeAuthor,
+            'description' => $this->themeDescription ?? '',
+            'version' => $this->themeVersion,
+            'thumbnail' => $this->themeThumbnail,
+        ], JSON_PRETTY_PRINT);
+    }
 
-        if (! $theme) {
-            $theme = $this->askValid(
+    protected function askThemeMetadata()
+    {
+        $this->themeName = $this->argument('theme');
+
+        if (! $this->themeName ) {
+            $this->themeName = $this->askValid(
                 'Name of your theme',
                 'theme',
                 ['required']
             );
         }
 
-        return $theme;
+        $this->themeAuthor = $this->askValid(
+            'Author of your theme',
+            'author',
+            ['required']
+        );
+
+        $this->themeDescription = $this->askValid(
+            'Description of your theme (optional)',
+            'description',
+            ['nullable']
+        );
+
+        $this->themeThumbnail = $this->askValid(
+            'Thumbnail of your theme (optional)',
+            'thumbnail',
+            ['nullable']
+        );
+
+        $this->themeVersion = "1.0.0";
     }
 
     protected function askCssFramework()

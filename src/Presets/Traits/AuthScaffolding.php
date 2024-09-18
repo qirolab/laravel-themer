@@ -13,7 +13,7 @@ trait AuthScaffolding
 
     public function themePath($path = '')
     {
-        return Theme::path($path, $this->theme);
+        return Theme::path($path, $this->themeName);
     }
 
     public function exportAuthScaffolding(string $authScaffolding = 'Views Only'): void
@@ -81,25 +81,25 @@ trait AuthScaffolding
 
     public function exportViews(): self
     {
-        $this->ensureDirectoryExists(Theme::path('views', $this->theme));
+        $this->ensureDirectoryExists(Theme::path('views', $this->themeName));
 
         $this->copyDirectory(
             __DIR__."/../../../stubs/resources/{$this->cssFramework}/views",
-            Theme::path('views', $this->theme)
+            Theme::path('views', $this->themeName)
         );
 
-        $themePath = $this->relativeThemePath($this->theme);
+        $themePath = $this->relativeThemePath($this->themeName);
 
         $cssPath = $themePath.($this->cssFramework === CssFramework::Bootstrap ? '/sass/app.scss' : '/css/app.css');
         $jsPath = $themePath.'/js/app.js';
-        $viteConfig = "@vite(['".$cssPath."', '".$jsPath."'], '".$this->theme."')";
+        $viteConfig = "@vite(['".$cssPath."', '".$jsPath."'], '".$this->themeName."')";
 
         if ($this->jsFramework === JsFramework::React) {
             $viteConfig = '@viteReactRefresh'."\n    ".$viteConfig;
         }
 
-        $this->replaceInFile('%vite%', $viteConfig, Theme::path('views/layouts/app.blade.php', $this->theme));
-        $this->replaceInFile('%vite%', $viteConfig, Theme::path('views/layouts/guest.blade.php', $this->theme));
+        $this->replaceInFile('%vite%', $viteConfig, Theme::path('views/layouts/app.blade.php', $this->themeName));
+        $this->replaceInFile('%vite%', $viteConfig, Theme::path('views/layouts/guest.blade.php', $this->themeName));
 
         return $this;
     }
