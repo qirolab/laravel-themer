@@ -11,3 +11,4 @@ phpunit.xml
 psalm.xml
 vendor
 .phpunit.cache
+.DS_Store
