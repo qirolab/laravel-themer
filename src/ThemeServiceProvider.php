@@ -30,7 +30,16 @@ class ThemeServiceProvider extends ServiceProvider
 
         $this->registerThemeFinder();
 
+        $this->registerTheme();
+
         $this->registerSolutionProvider();
+    }
+
+    protected function registerTheme(): void 
+    {
+        $this->app->singleton('theme', function ($app) {
+            return new Theme();
+        });
     }
 
     protected function mergeConfig(): void
