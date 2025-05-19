@@ -19,14 +19,10 @@ class ThemeViewFinder extends FileViewFinder
 
     public function getViewFinder()
     {
-        // It should return `theme.finder` if Laravel's view finder is replaced
-        // with package's finder.
-        // return app('theme.finder');
-
         return app('view')->getFinder();
     }
 
-    public function setActiveTheme(string $theme, string $parentTheme = null): void
+    public function setActiveTheme(string $theme, ?string $parentTheme): void
     {
         if ($theme) {
             $this->clearThemes();
@@ -48,7 +44,7 @@ class ThemeViewFinder extends FileViewFinder
         $this->hints = $hints;
     }
 
-    public function getThemePath(string $theme, string $path = null): string
+    public function getThemePath(string $theme, ?string $path): string
     {
         if (! config('theme.base_path')) {
             throw new ThemeBasePathNotDefined();
@@ -59,7 +55,7 @@ class ThemeViewFinder extends FileViewFinder
         );
     }
 
-    public function getThemeViewPath(string $theme = null): string
+    public function getThemeViewPath(?string $theme): string
     {
         $theme = $theme ?? $this->getActiveTheme();
 
@@ -109,8 +105,6 @@ class ThemeViewFinder extends FileViewFinder
 
     public function registerTheme(string $theme): void
     {
-        // array_unshift($this->paths, $this->getThemeViewPath($theme));
-
         $this->getViewFinder()->prependLocation($this->getThemeViewPath($theme));
 
         $this->registerNameSpacesForTheme($theme);
