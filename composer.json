@@ -31,7 +31,10 @@
         "psr-4": {
             "Qirolab\\Theme\\": "src",
             "Qirolab\\Theme\\Database\\Factories\\": "database/factories"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
