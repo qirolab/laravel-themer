@@ -1,10 +1,10 @@
 # Multi theme support for Laravel application
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/qirolab/laravel-themer.svg?style=flat-square)](https://packagist.org/packages/qirolab/laravel-themer)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/coderstm/laravel-themer.svg?style=flat-square)](https://packagist.org/packages/coderstm/laravel-themer)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/coders-tm/laravel-themer/Tests?label=Tests)](https://github.com/coders-tm/laravel-themer/actions?query=workflow%3ATests+branch%3Amaster)
-[![Styling](https://github.com/qirolab/laravel-themer/workflows/Check%20&%20fix%20styling/badge.svg)](https://github.com/qirolab/laravel-themer/actions?query=workflow%3A%22Check+%26+fix+styling%22)
-[![Psalm](https://github.com/qirolab/laravel-themer/workflows/Psalm/badge.svg)](https://github.com/qirolab/laravel-themer/actions?query=workflow%3APsalm)
-[![Total Downloads](https://img.shields.io/packagist/dt/qirolab/laravel-themer.svg?style=flat-square)](https://packagist.org/packages/qirolab/laravel-themer)
+[![Styling](https://github.com/coders-tm/laravel-themer/workflows/Check%20&%20fix%20styling/badge.svg)](https://github.com/coders-tm/laravel-themer/actions?query=workflow%3A%22Check+%26+fix+styling%22)
+[![Psalm](https://github.com/coders-tm/laravel-themer/workflows/Psalm/badge.svg)](https://github.com/coders-tm/laravel-themer/actions?query=workflow%3APsalm)
+[![Total Downloads](https://img.shields.io/packagist/dt/coderstm/laravel-themer.svg?style=flat-square)](https://packagist.org/packages/coderstm/laravel-themer)
 
 This Laravel package adds multi-theme support to your application. It also provides a simple authentication scaffolding for a starting point for building a Laravel application. And it also has preset for `Bootstrap`, `Tailwind`, `Vue`, and `React`. So, I believe it is a good alternative to the `laravel/ui` & `laravel/breeze` package.
 
@@ -36,7 +36,7 @@ Here is the video for **[Laravel Themer Tutorial](https://www.youtube.com/watch?
 You can install this package via composer using:
 
 ```bash
-composer require qirolab/laravel-themer
+composer require coderstm/laravel-themer
 ```
 
 Publish a configuration file:
