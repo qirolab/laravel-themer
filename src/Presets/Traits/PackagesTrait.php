@@ -2,6 +2,9 @@
 
 namespace Qirolab\Theme\Presets\Traits;
 
+/**
+ * @method static array updatePackageArray(array $packages)
+ */
 trait PackagesTrait
 {
     public function getPackages()

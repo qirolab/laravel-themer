@@ -19,7 +19,7 @@ class ControllerViewTest extends TestCase
     }
 
     /** @test **/
-    public function it_renders_view_from_active_theme()
+    public function test_it_renders_view_from_active_theme()
     {
         $text = $this->publishBladeFile(config('theme.active'));
 
@@ -29,7 +29,7 @@ class ControllerViewTest extends TestCase
     }
 
     /** @test **/
-    public function it_renders_view_from_parent_if_view_file_not_found_in_active_theme()
+    public function test_it_renders_view_from_parent_if_view_file_not_found_in_active_theme()
     {
         Theme::set('main', 'parent');
 
@@ -41,7 +41,7 @@ class ControllerViewTest extends TestCase
     }
 
     /** @test **/
-    public function it_renders_view_from_default_laravel_views_if_view_file_not_found_in_active_or_parent_theme()
+    public function test_it_renders_view_from_default_laravel_views_if_view_file_not_found_in_active_or_parent_theme()
     {
         Theme::set('main-theme', 'parent-theme');
 

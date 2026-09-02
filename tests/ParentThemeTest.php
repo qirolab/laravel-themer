@@ -19,7 +19,7 @@ class ParentThemeTest extends TestCase
     }
 
     /** @test **/
-    public function it_may_have_parent_theme()
+    public function test_it_may_have_parent_theme()
     {
         $theme = config('theme.active');
         $parentTheme = config('theme.parent');
@@ -30,7 +30,7 @@ class ParentThemeTest extends TestCase
     }
 
     /** @test **/
-    public function it_may_switch_parent_theme()
+    public function test_it_may_switch_parent_theme()
     {
         $theme = config('theme.active');
         $parentTheme = config('theme.parent');
@@ -50,7 +50,7 @@ class ParentThemeTest extends TestCase
     }
 
     /** @test **/
-    public function it_returns_parent_theme_name()
+    public function test_it_returns_parent_theme_name()
     {
         $this->assertEquals(config('theme.parent'), Theme::parent());
 
@@ -64,7 +64,7 @@ class ParentThemeTest extends TestCase
     }
 
     /** @test **/
-    public function if_theme_is_disabled_then_active_theme_returns_null()
+    public function test_if_theme_is_disabled_then_active_theme_returns_null()
     {
         // $this->app['view']->setFinder($this->app['view.finder']);
         app()->forgetInstance('theme.finder');
@@ -73,7 +73,7 @@ class ParentThemeTest extends TestCase
     }
 
     /** @test **/
-    public function it_removes_previous_parent_theme_path_on_switch_theme()
+    public function test_it_removes_previous_parent_theme_path_on_switch_theme()
     {
         $theme = config('theme.active');
         $parentTheme = config('theme.parent');
@@ -102,7 +102,7 @@ class ParentThemeTest extends TestCase
     }
 
     /** @test **/
-    public function it_removes_parent_theme_on_switch_only_active_theme()
+    public function test_it_removes_parent_theme_on_switch_only_active_theme()
     {
         $theme = config('theme.active');
         $parentTheme = config('theme.parent');

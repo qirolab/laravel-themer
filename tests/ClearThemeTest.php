@@ -19,7 +19,7 @@ class ClearThemeTest extends TestCase
     }
 
     /** @test **/
-    public function it_may_clear_theme()
+    public function test_it_may_clear_theme()
     {
         $theme = config('theme.active');
         $parentTheme = config('theme.parent');
