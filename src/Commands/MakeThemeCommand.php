@@ -82,11 +82,11 @@ class MakeThemeCommand extends Command
             $this->comment('Add following line in the `<fg=blue>scripts</fg=blue>` section of the `<fg=blue>package.json</fg=blue>` file:');
             $this->line('');
 
-            $this->line('"scripts": {', 'fg=magenta');
-            $this->line('    ...', 'fg=magenta');
+            $this->line('<fg=magenta>"scripts": {</fg=magenta>');
+            $this->line('<fg=magenta>    ...</fg=magenta>');
             $this->line('');
-            $this->line($scriptDevCmd, 'fg=magenta');
-            $this->line($scriptBuildCmd, 'fg=magenta');
+            $this->line("<fg=magenta>{$scriptDevCmd}</fg=magenta>");
+            $this->line("<fg=magenta>{$scriptBuildCmd}</fg=magenta>");
             $this->line('}');
 
             $this->line('');

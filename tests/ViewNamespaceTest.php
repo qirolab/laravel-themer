@@ -19,7 +19,7 @@ class ViewNamespaceTest extends TestCase
     }
 
     /** @test **/
-    public function it_renders_namespaced_view_from_the_active_theme()
+    public function test_it_renders_namespaced_view_from_the_active_theme()
     {
         $text = $this->publishBladeFile('main');
         $namespaceText = $this->publishNamespacedBladeFile('main');
@@ -33,7 +33,7 @@ class ViewNamespaceTest extends TestCase
     }
 
     /** @test **/
-    public function it_renders_namespaced_view_from_parent_if_view_file_not_found_in_active_theme()
+    public function test_it_renders_namespaced_view_from_parent_if_view_file_not_found_in_active_theme()
     {
         $text = $this->publishBladeFile('main');
         $namespaceText = $this->publishNamespacedBladeFile('parent');

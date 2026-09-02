@@ -19,13 +19,13 @@ class ThemeTest extends TestCase
     }
 
     /** @test **/
-    public function it_returns_theme_finder_class()
+    public function test_it_returns_theme_finder_class()
     {
         $this->assertInstanceOf(ThemeViewFinder::class, Theme::finder());
     }
 
     /** @test **/
-    public function it_returns_theme_view_path()
+    public function test_it_returns_theme_view_path()
     {
         // theme from config
         $theme = config('theme.active');
@@ -41,7 +41,7 @@ class ThemeTest extends TestCase
     }
 
     /** @test **/
-    public function it_returns_theme_path()
+    public function test_it_returns_theme_path()
     {
         $theme = config('theme.active');
         $path = config('theme.base_path') . DIRECTORY_SEPARATOR . $theme;
@@ -58,7 +58,7 @@ class ThemeTest extends TestCase
     }
 
     /** @test **/
-    public function it_includes_theme_view_path_in_the_laravel_view_finder_paths()
+    public function test_it_includes_theme_view_path_in_the_laravel_view_finder_paths()
     {
         $this->assertCount(2, View::getFinder()->getPaths());
 
@@ -66,7 +66,7 @@ class ThemeTest extends TestCase
     }
 
     /** @test **/
-    public function it_can_set_new_theme()
+    public function test_it_can_set_new_theme()
     {
         $theme = config('theme.active');
         $this->assertEquals(Theme::viewPath($theme), View::getFinder()->getPaths()[0]);
@@ -79,7 +79,7 @@ class ThemeTest extends TestCase
     }
 
     /** @test **/
-    public function it_returns_active_theme_name()
+    public function test_it_returns_active_theme_name()
     {
         $this->assertEquals(config('theme.active'), Theme::active());
 
@@ -88,7 +88,7 @@ class ThemeTest extends TestCase
     }
 
     /** @test **/
-    public function it_removes_previous_theme_path_from_laravel_view_finder_paths()
+    public function test_it_removes_previous_theme_path_from_laravel_view_finder_paths()
     {
         $theme = config('theme.active');
         $previousPath = Theme::viewPath($theme);
@@ -109,7 +109,7 @@ class ThemeTest extends TestCase
     }
 
     /** @test **/
-    public function on_change_view_finder_active_theme_returns_null()
+    public function test_on_change_view_finder_active_theme_returns_null()
     {
         // $this->app['view']->setFinder($this->app['view.finder']);
         app()->forgetInstance('theme.finder');
@@ -118,7 +118,7 @@ class ThemeTest extends TestCase
     }
 
     /** @test **/
-    public function it_returns_all_view_paths()
+    public function test_it_returns_all_view_paths()
     {
         $this->assertCount(2, Theme::getViewPaths());
 

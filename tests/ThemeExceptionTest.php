@@ -19,7 +19,7 @@ class ThemeExceptionTest extends TestCase
     }
 
     /** @test **/
-    public function it_throws_theme_base_path_not_defined_exception_if_base_path_is_null()
+    public function test_it_throws_theme_base_path_not_defined_exception_if_base_path_is_null()
     {
         $this->expectException(ThemeBasePathNotDefined::class);
 

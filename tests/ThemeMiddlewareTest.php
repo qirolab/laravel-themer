@@ -33,7 +33,7 @@ class ThemeMiddlewareTest extends TestCase
     }
 
     /** @test **/
-    public function it_may_set_active_theme()
+    public function test_it_may_set_active_theme()
     {
         $this->assertEquals(Theme::active(), 'default');
 
@@ -45,7 +45,7 @@ class ThemeMiddlewareTest extends TestCase
     }
 
     /** @test **/
-    public function it_may_set_parent_theme()
+    public function test_it_may_set_parent_theme()
     {
         $this->assertEquals(Theme::active(), 'default');
         $this->assertEquals(Theme::parent(), null);
